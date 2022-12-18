@@ -2,3 +2,4 @@
 **/target
 **/.vscode
 download
+**/node_modules
