@@ -2,11 +2,6 @@
 
 Soccer tournament project
 
-## Code convention
-
-- google-java-format
-- prettier
-
 ## Commit message convention
 
 Example: feat(ticket_number): add more speakers
