@@ -1,0 +1,31 @@
+{
+	"message": "ok",
+	"timestamp": "2022-12-18T01:48:59.7302563",
+	"errors": [
+		{
+			"field": "ClubsResponse",
+			"value": "https://futdb.app/api/clubs/48/image",
+			"message": "Invocation target endpoint exception download"
+		},
+		{
+			"field": "NationsResponse",
+			"value": "https://futdb.app/api/nations/184/image",
+			"message": "Invocation target endpoint exception download"
+		},
+		{
+			"field": "ClubsResponse",
+			"value": "https://futdb.app/api/clubs/114153/image",
+			"message": "Invocation target endpoint exception download"
+		},
+		{
+			"field": "LeaguesResponse",
+			"value": "https://futdb.app/api/leagues/2179/image",
+			"message": "Invocation target endpoint exception download"
+		},
+		{
+			"field": "LeaguesResponse",
+			"value": "https://futdb.app/api/leagues/0/image",
+			"message": "Invocation target endpoint exception download"
+		}
+	]
+}
