@@ -1,0 +1,5 @@
+@import "custom";
+
+main {
+	@include customScrollBar(true, true);
+}

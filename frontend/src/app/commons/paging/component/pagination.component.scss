@@ -1,0 +1,14 @@
+@import "src/custom";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/button-group";
+
+.pagination {
+	.btn-outline-light,
+	.btn-outline-secondary {
+		--#{$prefix}btn-color: #{$btn-link-color} !important;
+		--#{$prefix}btn-focus-shadow-rgb: #{to-rgb(mix(color-contrast($primary), $primary, 15%))} !important;
+		--#{$prefix}btn-active-color: #{$white} !important;
+		--#{$prefix}btn-active-bg: #{$primary} !important;
+		--#{$prefix}btn-active-border-color: #{$primary};
+	}
+}

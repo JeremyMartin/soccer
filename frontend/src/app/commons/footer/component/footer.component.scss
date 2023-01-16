@@ -1,0 +1,6 @@
+@import "src/custom";
+
+footer {
+	background-color: var(--#{$prefix}footer-bg);
+	color: var(--#{$prefix}footer-color);
+}

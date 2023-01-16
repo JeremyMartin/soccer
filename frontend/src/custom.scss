@@ -1,0 +1,360 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+$input-btn-focus-width: .125rem;
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
+
+// 4. Include any default map overrides here
+
+// 5. Include remainder of required parts
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/modal";
+
+
+$adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 55%, 60 60%, 65 65%, 70 70%, 80 80%, 85 85%, 90 90%, 95 95%;
+
+@each $name, $size in $adds {
+	$utilities: map-merge(
+			$utilities,
+			(
+				"width": map-merge(
+						map-get($utilities, "width"),
+						(
+							values: map-merge(
+									map-get(map-get($utilities, "width"), "values"),
+									($name: $size),
+							),
+						),
+				),
+				"height": map-merge(
+						map-get($utilities, "height"),
+						(
+							values: map-merge(
+									map-get(map-get($utilities, "height"), "values"),
+									($name: $size),
+							),
+						),
+				),
+			)
+	);
+}
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "bootstrap/scss/utilities/api";
+
+// 8. Add additional custom code here
+//
+//button,
+//input,
+//li {
+//	&:disabled,
+//	&.disabled {
+//		cursor: not-allowed !important;
+//		//pointer-events: unset !important;
+//	}
+//}
+
+
+@mixin customScrollBar($isWidth:true, $isHeight:false, $size:.5rem, $color:$secondary) {
+
+	&::-webkit-scrollbar {
+		@if ($isWidth) {
+			width: $size;
+		}
+		@if ($isHeight) {
+			height: $size;
+		}
+	}
+
+	&::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 $size $color;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: tint-color($color, $btn-hover-bg-tint-amount);
+		//border-radius: $size;
+
+		&:hover {
+			background-color: shade-color($color, $btn-hover-bg-shade-amount);
+		}
+	}
+
+	&::-webkit-scrollbar-corner {
+		background-color: transparent;
+		//background-color: inherit;
+		//box-shadow: inset 0 0 $size $color;
+	}
+}
+
+@mixin table-tri($color:$black) {
+	.table {
+		thead {
+			tr {
+				th {
+					&.asc:after,
+					&.desc:after {
+						$icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' fill='#{$color}'><path d='M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z'/></svg>");
+						content: "";
+						display: inline-block;
+						background-image: escape-svg($icon);
+						background-size: .75rem 1.313rem;
+						background-repeat: no-repeat;
+						width: .75rem;
+						height: 1.313rem;
+						margin-left: .25rem;
+						translate: 0 .313rem;
+					}
+
+					&.desc:after {
+						transform: rotate(180deg);
+						-ms-transform: rotate(180deg);
+					}
+				}
+			}
+		}
+	}
+}
+
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+}
+
+.btn-warning,
+.btn-info {
+	--#{$prefix}btn-color: #{$white} !important;
+}
+
+
+.btn-warning,
+.btn-outline-warning,
+.btn-info,
+.btn-outline-info {
+	--#{$prefix}btn-hover-color: #{$white} !important;
+}
+
+.badge {
+	&.text-bg-warning,
+	&.text-bg-info {
+		color: #{$white} !important;
+	}
+}
+
+.card-collapse {
+	.collapse-button {
+		width: 100%;
+		text-align: left;
+		border-color: transparent;
+		background-color: transparent;
+		color: var(--#{$prefix}body-color);
+		padding: 0;
+
+		&[aria-expanded="true"] {
+			svg {
+				transform: rotate(90deg);
+			}
+		}
+	}
+}
+
+.table-responsive {
+	@include customScrollBar(true, true)
+}
+
+
+.table {
+
+	border-collapse: separate;
+	border-spacing: 0 .125rem;
+
+	> :not(caption) > * > * {
+		border-bottom-width: 0 !important;
+	}
+
+	thead {
+		vertical-align: middle !important;
+
+		&.sticky {
+			background-color: var(--#{$prefix}body-bg);
+		}
+
+	}
+
+	tbody {
+		vertical-align: middle !important;
+
+		tr {
+			th,
+			td {
+				border-color: var(--#{$prefix}table-border-color);
+				border-style: solid;
+				border-top-width: $border-width;
+				border-bottom-width: $border-width !important;
+
+				&:first-child {
+					border-left-width: $border-width;
+					border-top-left-radius: $border-radius;
+					border-bottom-left-radius: $border-radius;
+				}
+
+				&:last-child {
+					border-right-width: $border-width;
+					border-top-right-radius: $border-radius;
+					border-bottom-right-radius: $border-radius
+				}
+
+				.action {
+					display: flex;
+					justify-content: center;
+				}
+			}
+		}
+	}
+}
+
+.breadcrumb {
+	.breadcrumb-item {
+		a {
+			text-decoration: none !important;
+		}
+	}
+}
+
+
+.color-scheme-dark {
+	--#{$prefix}body-bg: rgba(43, 48, 53, 1) !important;
+	--#{$prefix}body-color-rgb: 43, 48, 53 !important;
+	--#{$prefix}body-color: #{$white} !important;
+	--#{$prefix}footer-bg: rgba(var(--#{$prefix}dark-rgb), 1);
+	--#{$prefix}footer-color: #{$navbar-dark-active-color};
+	--#{$prefix}border-color-translucent: rgba(255, 255, 255, .15) !important;
+	--#{$prefix}link-color: rgba(110, 168, 254, 1) !important;
+	--#{$prefix}link-hover-color: rgba(158, 197, 254, 1) !important;
+
+	.navbar {
+		--#{$prefix}navbar-bg: rgba(var(--#{$prefix}dark-rgb), 1);
+		--#{$prefix}navbar-color: #{$navbar-dark-color};
+		--#{$prefix}navbar-hover-color: #{$navbar-dark-hover-color};
+		--#{$prefix}navbar-disabled-color: #{$navbar-dark-disabled-color};
+		--#{$prefix}navbar-active-color: #{$navbar-dark-active-color};
+		--#{$prefix}navbar-brand-color: #{$navbar-dark-brand-color};
+		--#{$prefix}navbar-brand-hover-color: #{$navbar-dark-brand-hover-color};
+		--#{$prefix}navbar-toggler-border-color: #{$navbar-dark-toggler-border-color};
+		--#{$prefix}navbar-toggler-icon-bg: #{escape-svg($navbar-dark-toggler-icon-bg)};
+		--#{$prefix}navbar-toggler-icon-close-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$navbar-dark-color}'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/></svg>"))};
+	}
+
+	.card {
+		--#{$prefix}card-bg: #424242;
+	}
+
+	.shadow {
+		box-shadow: 0 .5rem 1rem rgb(255 255 255 / 15%) !important;
+	}
+
+	.dropdown-menu {
+		--#{$prefix}dropdown-color: #{$dropdown-dark-color};
+		--#{$prefix}dropdown-bg: #{$dropdown-dark-bg};
+		--#{$prefix}dropdown-border-color: #{$dropdown-dark-border-color};
+		--#{$prefix}dropdown-box-shadow: #{$dropdown-dark-box-shadow};
+		--#{$prefix}dropdown-link-color: #{$dropdown-dark-link-color};
+		--#{$prefix}dropdown-link-hover-color: #{$dropdown-dark-link-hover-color};
+		--#{$prefix}dropdown-divider-bg: #{$dropdown-dark-divider-bg};
+		--#{$prefix}dropdown-link-hover-bg: #{$dropdown-dark-link-hover-bg};
+		--#{$prefix}dropdown-link-active-color: #{$dropdown-dark-link-active-color};
+		--#{$prefix}dropdown-link-active-bg: #{$dropdown-dark-link-active-bg};
+		--#{$prefix}dropdown-link-disabled-color: #{$dropdown-dark-link-disabled-color};
+		--#{$prefix}dropdown-header-color: #{$dropdown-dark-header-color};
+	}
+
+	.modal {
+		--#{$prefix}modal-color: unset;
+		--#{$prefix}modal-bg: #{$dropdown-dark-bg};
+		--#{$prefix}modal-border-color: rgba(255, 255, 255, .25) !important
+	}
+
+	.btn-close {
+		filter: invert(1) grayscale(100%) brightness(200%);
+	}
+
+	.breadcrumb {
+		--#{$prefix}breadcrumb-item-active-color: rgba(255, 255, 255, .75) !important;
+		--#{$prefix}breadcrumb-divider-color: rgba(255, 255, 255, .5) !important;
+
+		.breadcrumb-item {
+			a {
+				text-decoration: none !important;
+			}
+		}
+	}
+
+	@include table-tri($white);
+}
+
+.color-scheme-light {
+	--#{$prefix}body-bg: #fefefe !important;
+	--#{$prefix}body-color: #{$black} !important;
+	--#{$prefix}footer-bg: rgba(var(--#{$prefix}light-rgb), 1);
+	--#{$prefix}footer-color: #{$navbar-light-active-color};
+
+	.navbar {
+		--#{$prefix}navbar-bg: rgba(var(--#{$prefix}light-rgb), 1);
+		--#{$prefix}navbar-color: #{$navbar-light-color};
+		--#{$prefix}navbar-hover-color: #{$navbar-light-hover-color};
+		--#{$prefix}navbar-disabled-color: #{$navbar-light-disabled-color};
+		--#{$prefix}navbar-active-color: #{$navbar-light-active-color};
+		--#{$prefix}navbar-brand-color: #{$navbar-light-brand-color};
+		--#{$prefix}navbar-brand-hover-color: #{$navbar-light-brand-hover-color};
+		--#{$prefix}navbar-toggler-border-color: #{$navbar-light-toggler-border-color};
+		--#{$prefix}navbar-toggler-icon-bg: #{escape-svg($navbar-light-toggler-icon-bg)};
+		--#{$prefix}navbar-toggler-icon-close-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$navbar-light-color}'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/></svg>"))};
+
+		.dropdown-item {
+			&.active {
+				color: $white;
+			}
+		}
+	}
+
+	@include table-tri($black);
+
+	.dropdown-menu {
+		--#{$prefix}dropdown-bg: var(--#{$prefix}body-bg);
+	}
+}
+
+.dropdown-toggle {
+	@include caret(down);
+
+	&.show {
+		@include caret(up);
+		color: var(--#{$prefix}dropdown-color);
+
+		&.btn-outline-light {
+			color: $black;
+		}
+
+		&.btn-outline-secondary {
+			color: $white;
+		}
+	}
+
+}

@@ -1,0 +1,13 @@
+<nav [attr.aria-label]="'label.breadcrumb.main' | translate">
+	<ol class="breadcrumb">
+		<ng-container *ngFor="let item of items; let idx = index">
+			<li *ngIf="item.action && item.action.path && idx !== items.length - 1" class="breadcrumb-item">
+				<a *ngIf="!item.action.params" [routerLink]="[item.action.path]">{{ item.name | translate }}</a>
+				<a *ngIf="item.action.params" [routerLink]="[item.action.path, item.action.params]">{{ item.name | translate }}</a>
+			</li>
+			<li *ngIf="idx === items.length - 1" class="breadcrumb-item" [class.active]="idx === items.length - 1">
+				{{ item.name | translate }}
+			</li>
+		</ng-container>
+	</ol>
+</nav>

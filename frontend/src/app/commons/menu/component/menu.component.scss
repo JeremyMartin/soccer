@@ -1,0 +1,133 @@
+@import "src/custom";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/dropdown";
+
+.close-menu {
+	@media (max-width: 991px) {
+		display: block;
+	}
+
+	@media (min-width: 992px) {
+		display: none;
+	}
+
+	position: fixed;
+	top: 3.5rem;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+	background-color: transparent;
+	border: none;
+	cursor: default !important;
+
+	&[aria-expanded="true"] {
+		z-index: $zindex-fixed - 1;
+	}
+}
+
+.navbar {
+	background-color: var(--#{$prefix}navbar-bg);
+	border-bottom: var(--#{$prefix}border-width) var(--#{$prefix}border-style) var(--#{$prefix}border-color);
+	max-height: 3.563rem;
+	//position: fixed;
+	//top: 0;
+	//right: 0;
+	//left: 0;
+	z-index: $zindex-fixed;
+
+
+	.navbar-toggler {
+		&[aria-expanded="true"] {
+			.navbar-toggler-icon {
+				background-image: var(--#{$prefix}navbar-toggler-icon-close-bg);
+			}
+		}
+	}
+
+	.navbar-brand {
+		svg {
+			width: 1.875rem;
+			height: 2rem;
+			margin-bottom: 0;
+			margin-top: -.625rem;
+		}
+	}
+
+	@media (max-width: 545px) {
+		--#{$prefix}navbar-brand-margin-end: .25rem;
+	}
+
+	@media (max-width: 321px) {
+		.text-brand {
+			display: none;
+		}
+	}
+
+
+	@media (max-width: 991px) {
+		.navbar-nav {
+			--#{$prefix}nav-link-padding-x: 1rem;
+			background-color: var(--#{$prefix}navbar-bg);
+		}
+		.navbar-collapse {
+			&.collapsing,
+			&.show {
+				position: fixed;
+				top: 3.5rem;
+				left: 0;
+				background-color: var(--#{$prefix}navbar-bg);
+				border-bottom-right-radius: $dropdown-border-radius;
+				border-right: var(--#{$prefix}border-width) var(--#{$prefix}border-style) var(--#{$prefix}border-color);
+				border-bottom: var(--#{$prefix}border-width) var(--#{$prefix}border-style) var(--#{$prefix}border-color);
+				max-height: calc(100vh - 8rem);
+
+				z-index: $zindex-fixed + 1;
+			}
+
+			&.show {
+				overflow-y: auto;
+				@include customScrollBar(true);
+			}
+		}
+
+		.dropdown-toggle {
+			&.show {
+				padding-bottom: 0;
+			}
+		}
+
+		.dropdown-menu {
+			--#{$prefix}dropdown-bg: transparent;
+			--#{$prefix}dropdown-border-width: 0;
+
+			&.show {
+				padding-top: 0;
+				padding-bottom: 0;
+
+				.dropdown-item {
+					padding-left: 1.5rem;
+					padding-right: 1.5rem;
+				}
+			}
+		}
+	}
+
+	.dropdown-item {
+		color: inherit;
+
+		&.active,
+		&:active {
+			color: inherit;
+			//background: transparent;
+		}
+
+		&:hover,
+		&:focus {
+			&.no-select {
+				//background-color: transparent;
+			}
+		}
+	}
+}

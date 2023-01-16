@@ -1,0 +1,23 @@
+<div class="btn-group">
+	<button btnOutlineLightOrDark type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		<app-icon-os-default *ngIf="currentTheme === OS_DEFAULT"></app-icon-os-default>
+		<app-icon-light *ngIf="currentTheme === LIGHT"></app-icon-light>
+		<app-icon-dark *ngIf="currentTheme === DARK"></app-icon-dark>
+		{{ "label.theme.main" | translate }}
+	</button>
+	<ul class="dropdown-menu dropdown-menu-end">
+		<li *ngFor="let theme of THEMES">
+			<button
+				class="dropdown-item"
+				[class.active]="currentTheme === theme.name"
+				type="button"
+				[attr.id]="theme.id"
+				(click)="setTheme(theme.name)">
+				<app-icon-os-default *ngIf="theme.name === OS_DEFAULT"></app-icon-os-default>
+				<app-icon-light *ngIf="theme.name === LIGHT"></app-icon-light>
+				<app-icon-dark *ngIf="theme.name === DARK"></app-icon-dark>
+				{{ "label.theme." + theme.name | translate }}
+			</button>
+		</li>
+	</ul>
+</div>

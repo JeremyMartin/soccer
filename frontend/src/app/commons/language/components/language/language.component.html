@@ -1,0 +1,28 @@
+<div class="btn-group">
+	<button btnOutlineLightOrDark type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		<app-icon-flag-en *ngIf="currentLanguage.code === EN"></app-icon-flag-en>
+		<app-icon-flag-fr *ngIf="currentLanguage.code === FR"></app-icon-flag-fr>
+	</button>
+	<ul class="dropdown-menu dropdown-menu-end">
+		<li>
+			<button
+				class="dropdown-item"
+				[class.active]="currentLanguage.code === EN"
+				type="button"
+				[attr.id]="LANGUAGE_EN.code"
+				(click)="changeLanguage(LANGUAGE_EN)">
+				<app-icon-flag-en></app-icon-flag-en>
+			</button>
+		</li>
+		<li>
+			<button
+				class="dropdown-item"
+				[class.active]="currentLanguage.code === FR"
+				type="button"
+				[attr.id]="LANGUAGE_FR.code"
+				(click)="changeLanguage(LANGUAGE_FR)">
+				<app-icon-flag-fr></app-icon-flag-fr>
+			</button>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,89 @@
+{
+	"button": {
+		"add": {
+			"tournament": "Add a tournament"
+		},
+		"cancel": "Cancel",
+		"close": "Close",
+		"delete": {
+			"main": "Delete",
+			"tournament": "Delete tournament"
+		},
+		"open-close": "Open / close",
+		"paging": {
+			"first": "First page",
+			"last": "Last page",
+			"next": "Next page",
+			"previous": "Previous page"
+		},
+		"show":{
+			"tournament": "Show tournament"
+		}
+	},
+	"menu": {
+		"brand": "Soccer tournament",
+		"home": "Home",
+		"tournament": "Tournaments",
+		"toggle": "Open / close menu",
+		"parameters": "Parameters"
+	},
+	"meta": {
+		"description": "Soccer tournament management platform",
+		"title": "Soccer tournament"
+	},
+	"label": {
+		"application": {
+			"version": "Application version"
+		},
+		"breadcrumb": {
+			"main": "Breadcrumb",
+			"list": "List",
+			"add": "Add",
+			"view": "View"
+		},
+		"confirm": {
+			"delete": {
+				"title": "Delete confirmation",
+				"tournament": {
+					"sentence": "Are you sure you want to delete this tournament?"
+				}
+			}
+		},
+		"theme": {
+			"main":"Theme",
+			"dark": "Dark",
+			"light": "Light",
+			"os-default": "Os default"
+		}
+	},
+	"page": {
+		"error": {
+			"404": {
+				"main": "Page not found"
+			}
+		},
+		"home": {
+			"main": "Welcome to the soccer tournament management platform"
+		},
+		"parameters": {
+			"main": "Parameters",
+			"preference": {
+				"main": "Preferences",
+				"toggle": "Open / close preferences",
+				"language": "Language",
+				"theme": "Theme"
+			}
+		},
+		"tournament": {
+			"list": {
+				"main": "List of tournaments"
+			},
+			"add": {
+				"main":"Add a tournament"
+			},
+			"view": {
+				"main": "View a tournament"
+			}
+		}
+	}
+}

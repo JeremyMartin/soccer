@@ -1,0 +1,49 @@
+<div *ngIf="pager && pager.pages?.length" class="d-flex justify-content-center mb-3">
+	<div btn-group-small class="btn-group pagination" role="group">
+		<button
+			*ngIf="pager.currentPage !== 1"
+			(click)="setPage(1)"
+			btnOutlineLightOrDark
+			type="button"
+			class="btn"
+			[attr.aria-label]="'button.paging.first' | translate"
+			[disabled]="pager.currentPage === 1">
+			<fa-icon [icon]="['fas', 'angles-left']" aria-hidden="true"></fa-icon>
+		</button>
+		<button
+			*ngIf="pager.currentPage !== 1"
+			(click)="setPage(pager.currentPage - 1)"
+			btnOutlineLightOrDark
+			type="button"
+			class="btn"
+			[attr.aria-label]="'button.paging.previous' | translate"
+			[disabled]="pager.currentPage === 1">
+			<fa-icon [icon]="['fas', 'angle-left']" aria-hidden="true"></fa-icon>
+		</button>
+		<ng-container *ngFor="let page of pager.pages">
+			<button (click)="setPage(page)" btnOutlineLightOrDark type="button" class="btn" [class.active]="pager.currentPage === page">
+				{{ page }}
+			</button>
+		</ng-container>
+		<button
+			*ngIf="pager.currentPage !== pager.totalPages"
+			(click)="setPage(pager.currentPage + 1)"
+			btnOutlineLightOrDark
+			type="button"
+			class="btn"
+			[attr.aria-label]="'button.paging.next' | translate"
+			[disabled]="pager.currentPage === pager.totalPages">
+			<fa-icon [icon]="['fas', 'angle-right']" aria-hidden="true"></fa-icon>
+		</button>
+		<button
+			*ngIf="pager.currentPage !== pager.totalPages"
+			(click)="setPage(pager.totalPages)"
+			btnOutlineLightOrDark
+			type="button"
+			class="btn"
+			[attr.aria-label]="'button.paging.last' | translate"
+			[disabled]="pager.currentPage === pager.totalPages">
+			<fa-icon [icon]="['fas', 'angles-right']" aria-hidden="true"></fa-icon>
+		</button>
+	</div>
+</div>

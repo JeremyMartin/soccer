@@ -1,0 +1,89 @@
+{
+	"button": {
+		"add": {
+			"tournament": "Ajouter un tournoi"
+		},
+		"cancel": "Annuler",
+		"close": "Fermer",
+		"delete": {
+			"main": "Supprimer",
+			"tournament": "Supprimer le tournois"
+		},
+		"open-close": "Ouvrir / fermer",
+		"paging": {
+			"first": "Première page",
+			"last": "Dernière page",
+			"next": "Page suivante",
+			"previous": "Page précédente"
+		},
+		"show": {
+			"tournament": "Afficher le tournois"
+		}
+	},
+	"menu": {
+		"brand": "Tournois de football",
+		"home": "Accueil",
+		"tournament": "Tournois",
+		"toggle": "Ouvrir / fermer le menu",
+		"parameters": "Paramètres"
+	},
+	"meta": {
+		"description": "Plateforme de gestion de tournois de football",
+		"title": "Tournois de football"
+	},
+	"label": {
+		"application": {
+			"version": "Version de l'application"
+		},
+		"breadcrumb": {
+			"main": "Fil d'Ariane",
+			"list": "Liste",
+			"add": "Ajouter",
+			"view": "Consulter"
+		},
+		"confirm": {
+			"delete": {
+				"title": "Confirmation de suppression",
+				"tournament": {
+					"sentence": "Êtes-vous sûr(e) de vouloir supprimer ce tournoi ?"
+				}
+			}
+		},
+		"theme": {
+			"main": "Thème",
+			"dark": "Sombre",
+			"light": "Clair",
+			"os-default": "Os par défaut"
+		}
+	},
+	"page": {
+		"error": {
+			"404": {
+				"main": "Page non trouvée"
+			}
+		},
+		"home": {
+			"main": "Bienvenue sur la plateforme de gestion de tournois de football"
+		},
+		"parameters": {
+			"main": "Paramètres",
+			"preference": {
+				"main": "Préférences",
+				"toggle": "Ouvrir / fermer les préférence",
+				"language": "Langue",
+				"theme": "Thème"
+			}
+		},
+		"tournament": {
+			"list": {
+				"main": "Liste des tournois"
+			},
+			"add": {
+				"main":"Ajouter un tournoi"
+			},
+			"view": {
+				"main":"Consulter un tournoi"
+			}
+		}
+	}
+}

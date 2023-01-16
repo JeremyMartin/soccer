@@ -1,0 +1,23 @@
+<!--<app-menu></app-menu>-->
+<!--<main class="d-flex flex-column min-vh-100">-->
+<!--	<div class="container-fluid">-->
+<!--		<app-debug *ngIf="isDebugStyle"></app-debug>-->
+<!--		<router-outlet></router-outlet>-->
+<!--	</div>-->
+<!--	<app-footer></app-footer>-->
+<!--</main>-->
+
+<div class="vh-100 d-flex flex-column overflow-hidden">
+	<div class="flex-shrink-1">
+		<app-menu></app-menu>
+	</div>
+	<main class="d-flex flex-column flex-grow-1 overflow-auto">
+		<div class="container-fluid">
+			<app-debug *ngIf="isDebugStyle"></app-debug>
+			<router-outlet></router-outlet>
+		</div>
+	</main>
+	<!--		<div class="flex-shrink-0">-->
+	<app-footer></app-footer>
+	<!--	</div>-->
+</div>
