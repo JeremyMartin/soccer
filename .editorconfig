@@ -1,20 +1,13 @@
 root = true
 
 [*]
-max_line_length = 250
+max_line_length = 140
 charset = utf-8
 indent_size = 2
 indent_style = tab
 trim_trailing_whitespace = true
 end_of_line = lf
 insert_final_newline = true
-
-[*.java]
-max_line_length = 140
-
-
-[*.html]
-max_line_length = 140
 
 [*.ts]
 quote_type = double
