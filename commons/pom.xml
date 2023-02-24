@@ -14,8 +14,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>commons-entity</module>
 		<module>commons-utilities</module>
 		<module>commons-web</module>
-	</modules>
+  </modules>
 
 </project>

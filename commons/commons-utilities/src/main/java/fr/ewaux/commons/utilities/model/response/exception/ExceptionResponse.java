@@ -1,4 +1,4 @@
-package fr.ewaux.commons.utilities.model.response;
+package fr.ewaux.commons.utilities.model.response.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;

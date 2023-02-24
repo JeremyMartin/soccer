@@ -1,10 +1,10 @@
-package fr.ewaux.commons.web;
+package fr.ewaux.commons.web.controller;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fr.ewaux.commons.utilities.exception.ExternalApiException;
 import fr.ewaux.commons.utilities.exception.FileException;
-import fr.ewaux.commons.utilities.model.response.ExceptionResponse;
-import fr.ewaux.commons.utilities.model.response.ExpectedResponse;
+import fr.ewaux.commons.utilities.model.response.exception.ExceptionResponse;
+import fr.ewaux.commons.utilities.model.response.exception.ExpectedResponse;
 import fr.ewaux.commons.utilities.utils.MessageHelper;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
