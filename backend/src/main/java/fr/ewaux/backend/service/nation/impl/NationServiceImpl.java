@@ -1,11 +1,12 @@
 package fr.ewaux.backend.service.nation.impl;
 
-import fr.ewaux.backend.entity.nation.NationEntity;
+import fr.ewaux.backend.mapper.nation.NationMapper;
+import fr.ewaux.backend.model.soccer.nation.Nation;
 import fr.ewaux.backend.repository.nation.NationRepository;
 import fr.ewaux.backend.service.nation.NationService;
-import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service(value = "nationService")
 public class NationServiceImpl implements NationService {
@@ -18,7 +19,8 @@ public class NationServiceImpl implements NationService {
 	}
 
 	@Override
-	public Set<NationEntity> list() {
-		return new HashSet<>(this.nationRepository.findAll());
+	@Transactional
+	public Set<Nation> list(final boolean withClubs) {
+		return NationMapper.mapEntitiesToSetModels(this.nationRepository.findAll(), withClubs);
 	}
 }

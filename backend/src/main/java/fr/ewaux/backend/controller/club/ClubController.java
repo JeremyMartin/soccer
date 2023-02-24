@@ -4,6 +4,7 @@ import fr.ewaux.backend.service.club.ClubService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +20,7 @@ public class ClubController {
 
 	@GetMapping
 	@RequestMapping(path = "list")
-	public ResponseEntity<?> list() {
-		return ResponseEntity.ok(this.clubService.list());
+	public ResponseEntity<?> list(@RequestParam(name = "full",required = false) final boolean withNation) {
+		return ResponseEntity.ok(this.clubService.list(withNation));
 	}
 }

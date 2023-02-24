@@ -1,9 +1,9 @@
 package fr.ewaux.backend.service.nation;
 
-import fr.ewaux.backend.entity.nation.NationEntity;
+import fr.ewaux.backend.model.soccer.nation.Nation;
 import java.util.Set;
 
 public interface NationService {
 
-	Set<NationEntity> list();
+	Set<Nation> list(boolean withClubs);
 }

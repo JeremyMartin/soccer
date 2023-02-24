@@ -1,13 +1,10 @@
-package fr.ewaux.backend.entity.nation;
+package fr.ewaux.backend.model.soccer.nation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import fr.ewaux.backend.entity.club.ClubEntity;
-import fr.ewaux.commons.entity.AbstractLongNamingTranslatableEntity;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import fr.ewaux.backend.model.soccer.club.Club;
+import fr.ewaux.commons.utilities.model.AbstractLongNamingTranslatableModel;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,10 +21,7 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @ToString
 @JsonInclude(value = Include.NON_NULL)
-@Entity(name = "nation")
-@Table(name = "nation")
-public class NationEntity extends AbstractLongNamingTranslatableEntity {
+public class Nation extends AbstractLongNamingTranslatableModel {
 
-	@OneToMany(mappedBy = "nation")
-	List<ClubEntity> clubs;
+	Set<Club> clubs;
 }
