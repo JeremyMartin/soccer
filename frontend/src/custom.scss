@@ -60,17 +60,6 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 @import "bootstrap/scss/utilities/api";
 
 // 8. Add additional custom code here
-//
-//button,
-//input,
-//li {
-//	&:disabled,
-//	&.disabled {
-//		cursor: not-allowed !important;
-//		//pointer-events: unset !important;
-//	}
-//}
-
 
 @mixin customScrollBar($isWidth:true, $isHeight:false, $size:.5rem, $color:$secondary) {
 
@@ -136,6 +125,7 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
+	//align-self: auto;
 }
 
 .btn-warning,
@@ -167,6 +157,10 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		color: var(--#{$prefix}body-color);
 		padding: 0;
 
+		svg {
+			transition: all .35s ease;
+		}
+
 		&[aria-expanded="true"] {
 			svg {
 				transform: rotate(90deg);
@@ -176,14 +170,14 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 }
 
 .table-responsive {
-	@include customScrollBar(true, true)
+	@include customScrollBar(true, true);
+	overflow-x: unset !important;
 }
 
 
 .table {
-
 	border-collapse: separate;
-	border-spacing: 0 .125rem;
+	border-spacing: 0 .5rem;
 
 	> :not(caption) > * > * {
 		border-bottom-width: 0 !important;
@@ -202,8 +196,15 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		vertical-align: middle !important;
 
 		tr {
+
+			&:hover {
+				background-color: var(--#{$prefix}table-row-hover-bg);
+				color: var(--#{$prefix}table-row-hover-color);
+			}
+
 			th,
 			td {
+				//border-color: var(--#{$prefix}table-border-color);
 				border-color: var(--#{$prefix}table-border-color);
 				border-style: solid;
 				border-top-width: $border-width;
@@ -248,6 +249,10 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 	--#{$prefix}border-color-translucent: rgba(255, 255, 255, .15) !important;
 	--#{$prefix}link-color: rgba(110, 168, 254, 1) !important;
 	--#{$prefix}link-hover-color: rgba(158, 197, 254, 1) !important;
+	--#{$prefix}table-row-hover-bg: #{$white};
+	--#{$prefix}table-row-hover-color: #{$black};
+	--#{$prefix}border-color: #{$gray-400} !important;
+	--#{$prefix}spinner-bg: rgba(43, 48, 53, .5) !important;
 
 	.navbar {
 		--#{$prefix}navbar-bg: rgba(var(--#{$prefix}dark-rgb), 1);
@@ -263,7 +268,7 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 	}
 
 	.card {
-		--#{$prefix}card-bg: #424242;
+		--#{$prefix}card-bg: #424242 !important;
 	}
 
 	.shadow {
@@ -306,6 +311,40 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		}
 	}
 
+	.pagination {
+		--#{$prefix}pagination-bg: transparent !important;
+		--#{$prefix}pagination-hover-color: #{shade-color($dark, $btn-hover-bg-shade-amount) !important};
+		--#{$prefix}pagination-hover-bg: #{color-contrast(shade-color($dark, $btn-hover-bg-shade-amount))} !important;
+		--#{$prefix}pagination-focus-color: #{shade-color($dark, $btn-hover-bg-shade-amount) !important};
+		--#{$prefix}pagination-focus-bg: #{color-contrast(shade-color($dark, $btn-hover-bg-shade-amount))} !important;
+	}
+
+	.form-select {
+		color: $white !important;
+		background-color: var(--#{$prefix}body-bg) !important;
+		background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$white}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>"));
+
+		&.is-invalid {
+			background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$white}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>")), escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{$form-feedback-icon-invalid-color}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$form-feedback-icon-invalid-color}' stroke='none'/></svg>")) !important;
+		}
+
+		&.is-valid {
+			background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$white}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>")), escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='#{$form-feedback-icon-valid-color}' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/></svg>")) !important;
+		}
+	}
+
+	.form-control {
+		color: $white;
+		background-color: var(--#{$prefix}body-bg) !important;
+
+		&[type="number"],
+		&[type="text"] {
+			&:focus {
+				color: $white !important;
+			}
+		}
+	}
+
 	@include table-tri($white);
 }
 
@@ -314,6 +353,10 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 	--#{$prefix}body-color: #{$black} !important;
 	--#{$prefix}footer-bg: rgba(var(--#{$prefix}light-rgb), 1);
 	--#{$prefix}footer-color: #{$navbar-light-active-color};
+	--#{$prefix}table-row-hover-bg: #{$secondary};
+	--#{$prefix}table-row-hover-color: #{$white};
+	--#{$prefix}border-color: #{$gray-400} !important;
+	--#{$prefix}spinner-bg: rgba(var(--#{$prefix}light-rgb), .5);
 
 	.navbar {
 		--#{$prefix}navbar-bg: rgba(var(--#{$prefix}light-rgb), 1);

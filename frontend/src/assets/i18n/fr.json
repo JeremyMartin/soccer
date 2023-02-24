@@ -1,6 +1,7 @@
 {
 	"button": {
 		"add": {
+			"main": "Ajouter",
 			"tournament": "Ajouter un tournoi"
 		},
 		"cancel": "Annuler",
@@ -9,6 +10,9 @@
 			"main": "Supprimer",
 			"tournament": "Supprimer le tournois"
 		},
+		"generate": "Générer",
+		"next": "Suivant",
+		"open": "Ouvrir",
 		"open-close": "Ouvrir / fermer",
 		"paging": {
 			"first": "Première page",
@@ -16,8 +20,17 @@
 			"next": "Page suivante",
 			"previous": "Page précédente"
 		},
+		"previous": "Précédent",
 		"show": {
 			"tournament": "Afficher le tournois"
+		},
+		"submit": "Soumettre"
+	},
+	"error": {
+		"default": "Une erreur s'est produite",
+		"load": {
+			"nation": "Impossible de charger les nations",
+			"club": "Impossible de charger les clubs"
 		}
 	},
 	"menu": {
@@ -36,11 +49,32 @@
 			"version": "Version de l'application"
 		},
 		"breadcrumb": {
+			"add": "Ajouter",
 			"main": "Fil d'Ariane",
 			"list": "Liste",
-			"add": "Ajouter",
 			"view": "Consulter"
 		},
+		"choose": {
+			"main": "Choisir",
+			"nb": {
+				"group": "Nombre de groupe",
+				"player": "Nombre de joueur",
+				"team": "Nombre d'équipes"
+			},
+			"preference": {
+				"team": "Choix des équipes préférentielles"
+			},
+			"type": {
+				"leg": {
+					"first": "Aller",
+					"two": "Aller-retour"
+				},
+				"main": "Type",
+				"match": "Type de match",
+				"team": "Type d'équipes"
+			}
+		},
+		"club": "Club",
 		"confirm": {
 			"delete": {
 				"title": "Confirmation de suppression",
@@ -49,6 +83,28 @@
 				}
 			}
 		},
+		"configuration": "Configuration",
+		"loading": "Chargement...",
+		"name": {
+			"main": "Nom",
+			"player": "Nom du joueur"
+		},
+		"national": "Nationale",
+		"pagination": {
+			"choose": "Éléments par page"
+		},
+		"placeholder": {
+			"enter": {
+				"name": {
+					"main":"Saisir le nom",
+					"club": "Saisir le nom du club",
+					"nation": "Saisir le nom de l'équipe nationale"
+				}
+			}
+		},
+		"players": "Joueurs",
+		"random": "Aléatoire",
+		"teams": "Équipes",
 		"theme": {
 			"main": "Thème",
 			"dark": "Sombre",
@@ -79,10 +135,10 @@
 				"main": "Liste des tournois"
 			},
 			"add": {
-				"main":"Ajouter un tournoi"
+				"main": "Ajouter un tournoi"
 			},
 			"view": {
-				"main":"Consulter un tournoi"
+				"main": "Consulter un tournoi"
 			}
 		}
 	}

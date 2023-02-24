@@ -1,0 +1,43 @@
+<div *ngIf="pager && pager.pages?.length" class="row g-2 justify-content-around mt-1">
+	<div class="col-auto">
+		<ul pagination-small class="pagination">
+			<li *ngIf="pager.currentPage !== 1" [class.disabled]="pager.currentPage === 1" class="page-item">
+				<a href="" (click)="onClick($event, 1)" class="page-link" [attr.aria-label]="'button.paging.first' | translate">
+					<fa-icon [icon]="['fas', 'angles-left']" aria-hidden="true"></fa-icon>
+				</a>
+			</li>
+			<li *ngIf="pager.currentPage !== 1" [class.disabled]="pager.currentPage === 1" class="page-item">
+				<a
+					href=""
+					(click)="onClick($event, pager.currentPage - 1)"
+					class="page-link"
+					[attr.aria-label]="'button.paging.previous' | translate">
+					<fa-icon [icon]="['fas', 'angle-left']" aria-hidden="true"></fa-icon>
+				</a>
+			</li>
+			<li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page" class="page-item">
+				<a href="" (click)="onClick($event, page)" class="page-link">{{ page }}</a>
+			</li>
+			<li *ngIf="pager.currentPage !== pager.totalPages" [class.disabled]="pager.currentPage === pager.totalPages" class="page-item">
+				<a href="" (click)="onClick($event, pager.currentPage + 1)" class="page-link" [attr.aria-label]="'button.paging.next' | translate">
+					<fa-icon [icon]="['fas', 'angle-right']" aria-hidden="true"></fa-icon>
+				</a>
+			</li>
+			<li *ngIf="pager.currentPage !== pager.totalPages" [class.disabled]="pager.currentPage === pager.totalPages" class="page-item">
+				<a href="" (click)="onClick($event, pager.totalPages)" class="page-link" [attr.aria-label]="'button.paging.last' | translate">
+					<fa-icon [icon]="['fas', 'angles-right']" aria-hidden="true"></fa-icon>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-auto">
+		<div class="d-inline-block me-2">
+			<label for="itemsPerPage" class="d-inline">{{ "label.pagination.choose" | translate }}</label>
+		</div>
+		<div class="d-inline-block">
+			<select select-small id="itemsPerPage" class="form-select" [(ngModel)]="pageSize" (ngModelChange)="setItemsPerPage()">
+				<option *ngFor="let item of itemsPerPage" [attr.value]="item">{{ item }}</option>
+			</select>
+		</div>
+	</div>
+</div>

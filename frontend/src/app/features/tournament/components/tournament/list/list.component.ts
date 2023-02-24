@@ -4,10 +4,10 @@ import { generateTournaments } from "../../../utilities/tournament.utilities";
 import { BreadcrumbItem } from "../../../../../commons/breadcrumb/model/breadcrumb-item";
 import { SortColumn, SortDirection, SortEvent } from "../../../../../directives/table/sort/model/sort-event";
 import { SortableDirective } from "../../../../../directives/table/sort/directive/sortable.directive";
-import { compareFn } from "../../../../../commons/utils/utilities";
+import { compareFn } from "../../../../../commons/utils/fn-utilities";
 import { LocalizeDatePipe } from "../../../../../pipes/date/pipe/localize-date.pipe";
 import { TranslateService } from "@ngx-translate/core";
-import { EventPaging } from "../../../../../commons/paging/model/event-paging";
+import { EventPaging } from "../../../../../commons/pagination/model/event-paging";
 
 @Component({
 	selector: "app-list",
@@ -27,20 +27,19 @@ export class ListComponent implements OnInit {
 
 	tournaments: Array<Tournament> = [];
 	originalTournaments: Array<Tournament> = [];
-	pageSize: number = 10;
+	pageSize: number = 20;
 	maxPages: number = 6;
 	currentPage: number = 1;
 	currentTournament!: Tournament | undefined;
 
 	private datePipe!: LocalizeDatePipe;
 
-	constructor(private readonly tService: TranslateService) {
-		this.datePipe = new LocalizeDatePipe(tService);
+	constructor(private readonly translateService: TranslateService) {
+		this.datePipe = new LocalizeDatePipe(translateService);
 	}
 
 	ngOnInit(): void {
 		this.originalTournaments = generateTournaments();
-		// this.originalTournaments = [];
 	}
 
 	onClickDelete(tournament: Tournament): void {

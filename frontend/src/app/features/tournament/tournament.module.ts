@@ -12,21 +12,36 @@ import { ViewComponent } from "./components/tournament/view/view.component";
 import { DatePipeModule } from "../../pipes/date/date-pipe.module";
 import { TableDirectiveModule } from "../../directives/table/table-directive.module";
 import { StickyDirectiveModule } from "../../directives/sticky/sticky-directive.module";
-import { PagingModule } from "../../commons/paging/paging.module";
+import { PaginationModule } from "../../commons/pagination/pagination.module";
+import { SmallDirectiveModule } from "../../directives/small/small-directive.module";
+import { ButtonSmallDirectiveModule } from "../../directives/small/button/button-small-directive.module";
+import { FormStepModule } from "../../commons/form-step/form-step.module";
+import { ButtonOutlineLightOrDarkDirectiveModule } from "../../directives/button/button-outline-light-or-dark/button-outline-light-or-dark-directive.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { SpinnerModule } from "../../commons/spinner/spinner.module";
+import { NgbTypeaheadModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
 	declarations: [ListComponent, AddComponent, ViewComponent],
 	imports: [
 		BreadcrumbModule,
 		CommonModule,
+		ButtonOutlineLightOrDarkDirectiveModule,
+		ButtonSmallDirectiveModule,
 		DatePipeModule,
 		FontAwesomeModule,
-		PagingModule,
+		FormsModule,
+		FormStepModule,
+		NgbTypeaheadModule,
+		PaginationModule,
 		PopupModule,
+		ReactiveFormsModule,
+		SmallDirectiveModule,
+		StickyDirectiveModule,
+		SpinnerModule,
 		TableDirectiveModule,
 		TranslateModule,
 		TournamentRoutingModule,
-		StickyDirectiveModule,
 	],
 })
 export class TournamentModule {}

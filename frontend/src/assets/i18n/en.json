@@ -1,6 +1,7 @@
 {
 	"button": {
 		"add": {
+			"main": "Add",
 			"tournament": "Add a tournament"
 		},
 		"cancel": "Cancel",
@@ -9,6 +10,9 @@
 			"main": "Delete",
 			"tournament": "Delete tournament"
 		},
+		"generate": "Generate",
+		"next": "Next",
+		"open": "Open",
 		"open-close": "Open / close",
 		"paging": {
 			"first": "First page",
@@ -16,8 +20,17 @@
 			"next": "Next page",
 			"previous": "Previous page"
 		},
-		"show":{
+		"previous": "Previous",
+		"show": {
 			"tournament": "Show tournament"
+		},
+		"submit": "Submit"
+	},
+	"error": {
+		"default": "An error occurred",
+		"load": {
+			"nation": "Can't load nations",
+			"club": "Can't load clubs"
 		}
 	},
 	"menu": {
@@ -36,11 +49,32 @@
 			"version": "Application version"
 		},
 		"breadcrumb": {
+			"add": "Add",
 			"main": "Breadcrumb",
 			"list": "List",
-			"add": "Add",
 			"view": "View"
 		},
+		"choose": {
+			"main": "Choose",
+			"nb": {
+				"group": "Number of group",
+				"player": "Number of player",
+				"team": "Number of team"
+			},
+			"preference": {
+				"team": "Choice of preferential teams"
+			},
+			"type": {
+				"leg": {
+					"first": "First leg",
+					"two": "Two legs"
+				},
+				"main": "Type",
+				"match": "Match type",
+				"team": "Type of teams"
+			}
+		},
+		"club": "Club",
 		"confirm": {
 			"delete": {
 				"title": "Delete confirmation",
@@ -49,8 +83,30 @@
 				}
 			}
 		},
+		"configuration": "Configuration",
+		"loading": "Loading...",
+		"name": {
+			"main": "Name",
+			"player": "Name of player"
+		},
+		"national": "National",
+		"pagination": {
+			"choose": "Items per page"
+		},
+		"placeholder": {
+			"enter": {
+				"name": {
+					"main":"Enter name",
+					"club": "Enter club name",
+					"nation": "Enter the name of the national team"
+				}
+			}
+		},
+		"players": "Players",
+		"random": "Random",
+		"teams": "Teams",
 		"theme": {
-			"main":"Theme",
+			"main": "Theme",
 			"dark": "Dark",
 			"light": "Light",
 			"os-default": "Os default"
@@ -79,7 +135,7 @@
 				"main": "List of tournaments"
 			},
 			"add": {
-				"main":"Add a tournament"
+				"main": "Add a tournament"
 			},
 			"view": {
 				"main": "View a tournament"

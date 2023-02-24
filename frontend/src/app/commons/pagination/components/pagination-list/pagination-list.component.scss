@@ -1,0 +1,27 @@
+@import "src/custom";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/forms/form-select";
+
+.color-scheme-dark {
+	.pagination {
+		--#{$prefix}pagination-bg: transparent !important;
+		--#{$prefix}pagination-hover-color: #{shade-color($dark, $btn-hover-bg-shade-amount) !important};
+		--#{$prefix}pagination-hover-bg: #{color-contrast(shade-color($dark, $btn-hover-bg-shade-amount))} !important;
+		--#{$prefix}pagination-focus-color: #{shade-color($dark, $btn-hover-bg-shade-amount) !important};
+		--#{$prefix}pagination-focus-bg: #{color-contrast(shade-color($dark, $btn-hover-bg-shade-amount))} !important;
+		--#{$prefix}pagination-active-border-color: #{color-contrast(shade-color($dark, $btn-hover-bg-shade-amount))} !important;
+	}
+}
+
+.color-scheme-light {
+	.pagination {
+		--#{$prefix}pagination-bg: transparent !important;
+		--#{$prefix}pagination-hover-color: #{$white} !important;
+		--#{$prefix}pagination-hover-bg: #{$secondary} !important;
+		--#{$prefix}pagination-focus-color: #{$white} !important;
+		--#{$prefix}pagination-focus-bg: #{$secondary} !important;
+		--#{$prefix}pagination-hover-border-color: #{$secondary} !important;
+		--#{$prefix}pagination-border-color: #{$gray-400} !important;
+		--#{$prefix}pagination-active-border-color: #{$gray-400} !important;
+	}
+}

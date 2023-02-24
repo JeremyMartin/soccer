@@ -13,12 +13,12 @@ import { ButtonOutlineLightOrDarkDirectiveModule } from "../../directives/button
 	declarations: [ParameterComponent],
 	imports: [
 		CommonModule,
-		ParameterRoutingModule,
-		TranslateModule,
 		ButtonOutlineLightOrDarkDirectiveModule,
-		LanguageModule,
-		ThemeModule,
 		FontAwesomeModule,
+		LanguageModule,
+		ParameterRoutingModule,
+		ThemeModule,
+		TranslateModule,
 	],
 })
 export class ParameterModule {}

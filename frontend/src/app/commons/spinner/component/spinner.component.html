@@ -1,0 +1,4 @@
+<div class="container-spinner" [class.full]="isFullPage" [class.submit]="isSubmit">
+	<div class="spinner-border text-primary" role="status"></div>
+	<div *ngIf="showMessage" class="fs-3">{{ "label.loading" | translate }}</div>
+</div>

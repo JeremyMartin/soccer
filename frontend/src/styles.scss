@@ -1,5 +1,5 @@
 @import "custom";
 
-main {
+.main {
 	@include customScrollBar(true, true);
 }

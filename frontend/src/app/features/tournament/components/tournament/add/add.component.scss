@@ -1,0 +1,33 @@
+@import "src/custom";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/badge";
+
+img {
+	&.club,
+	&.nation {
+		width: 1.5rem;
+		margin-right: .25rem;
+	}
+}
+
+.badge {
+	display: inline-flex !important;
+	margin: .25rem;
+
+	.btn-close {
+		align-self: center;
+		filter: invert(1) grayscale(100%) brightness(200%);
+	}
+}
+
+.name-selected {
+	margin-right: .5rem;
+	align-self: center;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+input:disabled {
+	cursor: not-allowed;
+}

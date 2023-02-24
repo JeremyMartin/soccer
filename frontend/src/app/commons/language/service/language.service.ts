@@ -12,10 +12,6 @@ export class LanguageService {
 
 	constructor(private readonly translateService: TranslateService) {}
 
-	ngOnDestroy(): void {
-		this.currentLanguage.unsubscribe();
-	}
-
 	load(): void {
 		this.initLanguage();
 		this.currentLanguage.subscribe(({ code }) => this.translateService.use(code));

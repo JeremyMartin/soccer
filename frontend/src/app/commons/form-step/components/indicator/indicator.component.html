@@ -1,0 +1,15 @@
+<div *ngIf="formSteps && formSteps.length" class="d-flex">
+	<div class="col-12">
+		<div class="container-indicator">
+			<div class="d-flex mb-2 indicator">
+				<span
+					*ngFor="let step of formSteps; let idx = index"
+					class="step"
+					[class.active]="idx + 1 === currentFormStep"
+					[class.finish]="idx + 1 < currentFormStep || isFinish">
+					{{ step.label | translate }}
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
