@@ -1,7 +1,7 @@
 package fr.ewaux.scrapping.controller;
 
-import fr.ewaux.commons.utilities.model.response.ExpectedResponse;
-import fr.ewaux.commons.utilities.model.response.SuccessResponse;
+import fr.ewaux.commons.utilities.model.response.exception.ExpectedResponse;
+import fr.ewaux.commons.utilities.model.response.success.SuccessResponse;
 import fr.ewaux.scrapping.model.external.club.Club;
 import fr.ewaux.scrapping.model.external.club.ClubsResponse;
 import fr.ewaux.scrapping.model.external.league.LeaguesResponse;

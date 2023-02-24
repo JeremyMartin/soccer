@@ -1,6 +1,6 @@
 package fr.ewaux.scrapping.service.web;
 
-import fr.ewaux.commons.utilities.model.response.ExpectedResponse;
+import fr.ewaux.commons.utilities.model.response.exception.ExpectedResponse;
 import java.util.Set;
 
 public interface ExternalApiService {

@@ -2,7 +2,7 @@ package fr.ewaux.scrapping.service.web.impl;
 
 import fr.ewaux.commons.utilities.exception.ExternalApiException;
 import fr.ewaux.commons.utilities.exception.FileException;
-import fr.ewaux.commons.utilities.model.response.ExpectedResponse;
+import fr.ewaux.commons.utilities.model.response.exception.ExpectedResponse;
 import fr.ewaux.scrapping.model.external.club.Club;
 import fr.ewaux.scrapping.model.external.club.ClubsResponse;
 import fr.ewaux.scrapping.model.external.common.Pagination;
