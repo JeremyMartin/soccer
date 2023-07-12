@@ -24,7 +24,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder(toBuilder = true)
-@ToString
 @JsonInclude(value = Include.NON_NULL)
 @Entity(name = "club")
 @Table(name = "club")
@@ -34,8 +33,11 @@ public class ClubEntity extends AbstractLongNamingEntity {
 	String shortName;
 
 	@ManyToOne
-	@JoinColumn(name = "nation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_CLUB_NATION_NATION_ID"))
+	@JoinColumn(name = "nation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_club_nation_id"))
 	NationEntity nation;
 
-
+	@Override
+	public String toString() {
+		return "ClubEntity: { " + super.toString() + ", shortName:" + this.shortName+" }";
+	}
 }

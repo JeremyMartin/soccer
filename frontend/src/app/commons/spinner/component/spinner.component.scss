@@ -1,12 +1,128 @@
 @import "src/custom";
 @import "bootstrap/scss/spinners";
 
+
+@keyframes first {
+	0% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 1;
+	}
+	66% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes first {
+	0% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 1;
+	}
+	66% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes second {
+	0% {
+		opacity: 0;
+	}
+	21% {
+		opacity: 0;
+	}
+	22% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 1;
+	}
+	66% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes second {
+	0% {
+		opacity: 0;
+	}
+	21% {
+		opacity: 0;
+	}
+	22% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 1;
+	}
+	66% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes third {
+	0% {
+		opacity: 0;
+	}
+	43% {
+		opacity: 0;
+	}
+	44% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 1;
+	}
+	66% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes third {
+	0% {
+		opacity: 0;
+	}
+	43% {
+		opacity: 0;
+	}
+	44% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 1;
+	}
+	66% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
 .container-spinner {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	align-content: center;
+	text-align: center;
 
 	&.full {
 		z-index: 3000;
@@ -26,6 +142,24 @@
 	.spinner-border {
 		--#{$prefix}spinner-width: 5rem !important;
 		--#{$prefix}spinner-height: 5rem !important;
+	}
+
+	.text-spinner {
+
+		.dot-first {
+			margin-left: .188rem;
+			animation: first $spinner-animation-speed linear infinite;
+		}
+
+		.dot-second {
+			margin-left: .125rem;
+			animation: second $spinner-animation-speed linear infinite;
+		}
+
+		.dot-third {
+			margin-left: .125rem;
+			animation: third $spinner-animation-speed linear infinite;
+		}
 	}
 
 }

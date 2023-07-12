@@ -11,19 +11,19 @@ export class LocalizeDatePipe implements PipeTransform {
 
 	transform(value: string | number | Date | null | undefined, pattern: string = "short", defaultValue: string = "-"): string {
 		if (value) {
-			const datePipe: DatePipe = new DatePipe(this.translateService.currentLang);
+			const currentLang: string = this.translateService.currentLang;
+			const datePipe: DatePipe = new DatePipe(currentLang, currentLang === "fr" ? undefined : "UTC");
 			let result: string | null = datePipe.transform(value, pattern);
 			if (result) {
-				result = this.applyFormatIfShortPattern(result, pattern);
+				result = this.applyFormatIfShortPattern(currentLang, result, pattern);
 				return result;
 			}
 		}
 		return defaultValue;
 	}
 
-	private applyFormatIfShortPattern(result: string, pattern: string): string {
+	private applyFormatIfShortPattern(currentLang: string, result: string, pattern: string): string {
 		if (pattern === "short") {
-			const currentLang: string = this.translateService.currentLang;
 			let at: string;
 			switch (currentLang) {
 				case "fr":

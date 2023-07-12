@@ -13,4 +13,6 @@ export class SpinnerComponent {
 	isFullPage: boolean = false;
 	@Input()
 	isSubmit: boolean = false;
+	@Input()
+	message?: string;
 }

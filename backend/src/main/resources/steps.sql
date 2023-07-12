@@ -1,3 +1,12 @@
-insert into step (id, name_en, name_fr) select 1, 'Pool', 'Pool' where not exists (select 1 from step where id=1);
-insert into step (id, name_en, name_fr) select 2, 'First phase', 'Première phase' where not exists (select 1 from step where id=2);
-insert into step (id, name_en, name_fr) select 3, 'Final phase', 'Phase finale' where not exists (select 1 from step where id=3);
+insert into step (id, name_en, name_fr) select 1, 'Qualifying stage', 'Phase de qualification' where not exists (select 1 from step where id=1);
+insert into step (id, name_en, name_fr) select 2, 'Final stage', 'Phase de finale' where not exists (select 1 from step where id=2);
+insert into step (id, name_en, name_fr) select 3, 'Group', 'Groupe' where not exists (select 1 from step where id=3);
+insert into step (id, name_en, name_fr) select 4, 'Main', 'Principale' where not exists (select 1 from step where id=4);
+insert into step (id, name_en, name_fr) select 5, 'Consoling', 'Consolante' where not exists (select 1 from step where id=5);
+insert into step (id, name_en, name_fr) select 6, 'Round of 32', '32ème de finale' where not exists (select 1 from step where id=6);
+insert into step (id, name_en, name_fr) select 7, 'Round of 16', '16ème de finale' where not exists (select 1 from step where id=7);
+insert into step (id, name_en, name_fr) select 8, 'Round of 8', '8ème de finale' where not exists (select 1 from step where id=8);
+insert into step (id, name_en, name_fr) select 9, 'Quarter-final', 'Quart de finale' where not exists (select 1 from step where id=9);
+insert into step (id, name_en, name_fr) select 10, 'Semi-final', 'Demi-finale' where not exists (select 1 from step where id=10);
+insert into step (id, name_en, name_fr) select 11, 'Play-off for third place', 'Match pour la 3ème place' where not exists (select 1 from step where id=11);
+insert into step (id, name_en, name_fr) select 12, 'Final', 'Finale' where not exists (select 1 from step where id=12);

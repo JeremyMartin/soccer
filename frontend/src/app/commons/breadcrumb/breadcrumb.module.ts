@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { BreadcrumbComponent } from "./component/breadcrumb/breadcrumb.component";
+import { NgModule } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
+import { BreadcrumbComponent } from "./component/breadcrumb/breadcrumb.component";
 
 @NgModule({
 	declarations: [BreadcrumbComponent],

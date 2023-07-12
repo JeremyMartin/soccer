@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -34,6 +35,7 @@ public class WebMvcCorsConfiguration {
 		corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
 		corsConfiguration.setExposedHeaders(EXPOSED_HEADERS);
 		corsConfiguration.setMaxAge(MAX_AGE);
+		corsConfiguration.setAllowedMethods(Arrays.asList(CorsConfiguration.ALL));
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}

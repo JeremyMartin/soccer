@@ -1,77 +1,106 @@
 <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
-<div class="d-flex">
-	<div class="col-12 text-center">
-		<h1 id="title">{{ "page.tournament.list.main" | translate }}</h1>
-	</div>
-</div>
-<div class="d-flex">
-	<div class="col-12 text-center">
-		<a [routerLink]="['/tournament/add']" btn-small class="btn btn-success" [attr.aria-label]="'button.add.tournament' | translate">
-			<fa-icon [icon]="['fas', 'plus']" aria-hidden="true"></fa-icon>
-			<span class="ms-2">{{ "button.add.tournament" | translate }}</span>
-		</a>
-	</div>
-</div>
-<div class="d-flex mt-3">
-	<div class="col-12 col-lg-8 offset-lg-2">
-		<table *ngIf="tournaments && tournaments.length" table-small class="table" aria-labelledby="title">
-			<thead sticky>
-				<tr>
-					<th scope="col" class="w-20" sortable [column]="'id'" (sortEvent)="onClickSort($event)">#</th>
-					<th scope="col" class="w-50" sortable [column]="'name'" (sortEvent)="onClickSort($event)">Name</th>
-					<th scope="col" class="w-20" sortable [column]="'date'" (sortEvent)="onClickSort($event)">Date</th>
-					<th scope="col" class="w-10"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let tournament of tournaments">
-					<th scope="row">{{ tournament.id }}</th>
-					<td>{{ tournament.name }}</td>
-					<td>{{ tournament.date | localizeDate }}</td>
-					<td>
-						<div class="action">
-							<a
-								class="btn btn-primary"
-								btn-small
-								[routerLink]="['/tournament/consult', tournament.id]"
-								[attr.aria-label]="'button.show.tournament' | translate">
-								<fa-icon [icon]="['fas', 'eye']" aria-hidden="true"></fa-icon>
-							</a>
-							<button
-								type="button"
-								class="btn btn-danger ms-2"
-								data-bs-toggle="modal"
-								btn-small
-								(click)="onClickDelete(tournament)"
-								[attr.data-bs-target]="'#confirmDeleteTournament'"
-								[attr.aria-label]="'button.delete.tournament' | translate">
-								<fa-icon [icon]="['fas', 'trash-alt']" aria-hidden="true"></fa-icon>
-							</button>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<app-pagination-list
-			[items]="originalTournaments"
-			[initialPage]="currentPage"
-			[pageSize]="pageSize"
-			[maxPages]="maxPages"
-			(eventPage)="eventPaging($event)"></app-pagination-list>
-	</div>
-</div>
-<div *ngIf="tournaments && tournaments.length === 0" class="row mt-3">
-	<div>
-		<div class="col-12 col-lg-8 offset-lg-2">
-			<div class="alert alert-info" role="alert">A simple info alert—check it out!</div>
+<app-spinner *ngIf="isLoading && !errors.size" [message]="'label.loading.tournament.list'"></app-spinner>
+<app-error *ngIf="errors.size" [errors]="errors">
+	<app-title [title]="title"></app-title>
+</app-error>
+<ng-container *ngIf="!isLoading && !errors.size">
+	<app-title [title]="title"></app-title>
+	<div class="d-flex">
+		<div class="col-12 text-center">
+			<a [routerLink]="['/tournament/add']" btn-small class="btn btn-success" [attr.aria-label]="'button.add.tournament' | translate">
+				<fa-icon [icon]="['fas', 'plus']" aria-hidden="true"></fa-icon>
+				<span class="ms-2">{{ "button.add.tournament" | translate }}</span>
+			</a>
 		</div>
 	</div>
-</div>
-<app-confirm
-	[id]="'DeleteTournament'"
-	[titleKeyLabel]="'label.confirm.delete.title'"
-	[confirmKeyLabel]="'button.delete.main'"
-	(eventConfirm)="confirmDelete()">
-	<p>{{ "label.confirm.delete.tournament.sentence" | translate }}</p>
-	<p *ngIf="currentTournament" class="mb-0">{{ currentTournament.name }}</p>
-</app-confirm>
+	<div class="row mt-3 px-2">
+		<div class="table-responsive">
+			<div class="col-12 col-lg-8 offset-lg-2">
+				<table *ngIf="tournaments && tournaments.length" table-small class="custom-table" aria-labelledby="title">
+					<thead sticky>
+						<tr>
+							<th scope="col" class="w-10" sortable [column]="'id'" (sortEvent)="onClickSort($event)">#</th>
+							<th scope="col" class="w-30" sortable [column]="'name'" (sortEvent)="onClickSort($event)">
+								{{ "label.name.default" | translate }}
+							</th>
+							<th scope="col" class="w-20" sortable [column]="'date'" (sortEvent)="onClickSort($event)">
+								{{ "label.date" | translate }}
+							</th>
+							<th scope="col" class="w-20">
+								{{ "label.stage" | translate }}
+							</th>
+							<th scope="col" class="w-20">
+								{{ "label.nb.group" | translate }}
+							</th>
+							<th scope="col" class="w-10"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let tournament of tournaments">
+							<th scope="row">{{ tournament.id }}</th>
+							<td>{{ tournament.name }}</td>
+							<td>{{ tournament.date | localizeDate }}</td>
+							<td>{{ currentLanguage === LANGUAGE_FR ? tournament.step?.nameFr : tournament.step?.nameEn }}</td>
+							<td>{{ tournament.groups?.length || 1 }}</td>
+							<td>
+								<div class="action">
+									<a
+										class="btn btn-primary"
+										btn-small
+										[routerLink]="['/tournament/consult', tournament.id]"
+										[attr.aria-label]="'button.show.tournament' | translate">
+										<fa-icon [icon]="['fas', 'eye']" aria-hidden="true"></fa-icon>
+									</a>
+									<button
+										type="button"
+										class="btn btn-danger ms-2"
+										data-bs-toggle="modal"
+										btn-small
+										(click)="onClickDelete(tournament)"
+										[attr.data-bs-target]="'#confirmDeleteTournament'"
+										[attr.aria-label]="'button.delete.tournament' | translate"
+										[disabled]="tournament?.deleting">
+										<fa-icon *ngIf="!tournament?.deleting" [icon]="['fas', 'trash-alt']" aria-hidden="true"></fa-icon>
+										<span
+											*ngIf="tournament.deleting"
+											[attr.aria-label]="'label.loading.default' | translate"
+											class="spinner-border spinner-border-sm"
+											role="status"></span>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination-list
+				[items]="originalTournaments"
+				[initialPage]="currentPage"
+				[pageSize]="pageSize"
+				[maxPages]="maxPages"
+				(eventPage)="eventPaging($event)"></app-pagination-list>
+		</div>
+	</div>
+	<div *ngIf="tournaments && tournaments.length === 0" class="row mt-3">
+		<div>
+			<div class="col-12 col-lg-8 offset-lg-2">
+				<div class="alert alert-info" role="alert">
+					{{ "page.tournament.list.empty" | translate }}
+				</div>
+			</div>
+		</div>
+	</div>
+	<app-confirm
+		[id]="'DeleteTournament'"
+		[titleKeyLabel]="'label.confirm.delete.title'"
+		[confirmClass]="'btn-danger'"
+		[confirmKeyLabel]="'button.delete.default'"
+		(eventConfirm)="confirmDelete()">
+		<p class="text-danger fw-bold">
+			<fa-icon [icon]="['fas', 'triangle-exclamation']" aria-hidden="true" class="fa-lg me-1"></fa-icon>
+			{{ "label.irreversible" | translate }}
+		</p>
+		<p>{{ "label.confirm.delete.tournament.sentence" | translate }}</p>
+		<p *ngIf="currentTournament" class="mb-0">{{ currentTournament.name }}</p>
+	</app-confirm>
+</ng-container>

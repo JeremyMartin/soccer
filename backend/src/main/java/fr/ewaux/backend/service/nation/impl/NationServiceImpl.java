@@ -1,7 +1,7 @@
 package fr.ewaux.backend.service.nation.impl;
 
 import fr.ewaux.backend.mapper.nation.NationMapper;
-import fr.ewaux.backend.model.soccer.nation.Nation;
+import fr.ewaux.backend.model.response.nation.NationResponse;
 import fr.ewaux.backend.repository.nation.NationRepository;
 import fr.ewaux.backend.service.nation.NationService;
 import java.util.Set;
@@ -20,7 +20,8 @@ public class NationServiceImpl implements NationService {
 
 	@Override
 	@Transactional
-	public Set<Nation> list(final boolean withClubs) {
-		return NationMapper.mapEntitiesToSetModels(this.nationRepository.findAll(), withClubs);
+	public Set<NationResponse> list(final boolean withClubs) {
+		return NationMapper.mapEntitiesToModels(this.nationRepository.findAll(), withClubs);
 	}
+
 }

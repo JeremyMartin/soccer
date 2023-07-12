@@ -1,6 +1,14 @@
 import { createReducer, on } from "@ngrx/store";
+import {
+	initReferential,
+	loadClubsFailure,
+	loadClubsSuccess,
+	loadNationsFailure,
+	loadNationsSuccess,
+	loadStepsFailure,
+	loadStepsSuccess,
+} from "./referential.actions";
 import { initialReferentialState } from "./referential.state";
-import { initReferential, loadClubsFailure, loadClubsSuccess, loadNationsFailure, loadNationsSuccess } from "./referential.actions";
 
 export const ReferentialReducers = createReducer(
 	initialReferentialState,
@@ -8,6 +16,7 @@ export const ReferentialReducers = createReducer(
 		...state,
 		loadingClubs: true,
 		loadingNations: true,
+		loadingSteps: true,
 	})),
 	on(loadClubsSuccess, (state, { clubs }) => ({
 		...state,
@@ -30,6 +39,17 @@ export const ReferentialReducers = createReducer(
 		...state,
 		errorNations: error,
 		loadingNations: false,
+	})),
+	on(loadStepsSuccess, (state, { steps }) => ({
+		...state,
+		steps: steps,
+		loadedSteps: true,
+		loadingSteps: false,
+	})),
+	on(loadStepsFailure, (state, { error }) => ({
+		...state,
+		errorSteps: error,
+		loadingSteps: false,
 	}))
 );
 

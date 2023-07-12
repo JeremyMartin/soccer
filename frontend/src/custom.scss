@@ -3,6 +3,9 @@
 
 // 2. Include any default variable overrides here
 $input-btn-focus-width: .125rem;
+$zindex-modal-backdrop: 1095;
+$zindex-modal: 1100;
+$enable-negative-margins: true;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";
@@ -26,6 +29,10 @@ $input-btn-focus-width: .125rem;
 @import "bootstrap/scss/card";
 @import "bootstrap/scss/close";
 @import "bootstrap/scss/modal";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/tooltip";
 
 
 $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 55%, 60 60%, 65 65%, 70 70%, 80 80%, 85 85%, 90 90%, 95 95%;
@@ -93,22 +100,27 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 }
 
 @mixin table-tri($color:$black) {
-	.table {
+	.table,
+	.custom-table {
 		thead {
 			tr {
 				th {
+					&[sortable] {
+						cursor: pointer;
+					}
+
 					&.asc:after,
 					&.desc:after {
 						$icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' fill='#{$color}'><path d='M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z'/></svg>");
 						content: "";
 						display: inline-block;
 						background-image: escape-svg($icon);
-						background-size: .75rem 1.313rem;
+						background-size: .75rem 1rem;
 						background-repeat: no-repeat;
 						width: .75rem;
-						height: 1.313rem;
+						height: 1rem;
 						margin-left: .25rem;
-						translate: 0 .313rem;
+						translate: 0 .063rem;
 					}
 
 					&.desc:after {
@@ -122,11 +134,10 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 }
 
 .sticky {
-	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
-	//align-self: auto;
 }
+
 
 .btn-warning,
 .btn-info {
@@ -157,13 +168,14 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		color: var(--#{$prefix}body-color);
 		padding: 0;
 
-		svg {
-			transition: all .35s ease;
+		svg[data-icon="chevron-down"] {
+			transition: $accordion-icon-transition;
+			float: right;
 		}
 
 		&[aria-expanded="true"] {
-			svg {
-				transform: rotate(90deg);
+			svg[data-icon="chevron-down"] {
+				transform: $accordion-icon-transform;
 			}
 		}
 	}
@@ -171,16 +183,17 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 
 .table-responsive {
 	@include customScrollBar(true, true);
-	overflow-x: unset !important;
 }
 
 
-.table {
+.custom-table {
 	border-collapse: separate;
 	border-spacing: 0 .5rem;
+	width: 100%;
 
 	> :not(caption) > * > * {
 		border-bottom-width: 0 !important;
+		padding: .5rem;
 	}
 
 	thead {
@@ -345,6 +358,13 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		}
 	}
 
+	.input-group-text {
+		&:has(img),
+		&:has(.box) {
+			background-color: transparent !important;
+		}
+	}
+
 	@include table-tri($white);
 }
 
@@ -377,6 +397,13 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		}
 	}
 
+	//.input-group-text {
+	//	&:has(img),
+	//	&:has(.box) {
+	//		background-color: transparent !important;
+	//	}
+	//}
+
 	@include table-tri($black);
 
 	.dropdown-menu {
@@ -400,4 +427,63 @@ $adds: 5 5%, 10 10%, 15 15%, 20 20%, 25 25%, 30 30%, 35 35%, 40 40%, 45 45%, 55 
 		}
 	}
 
+}
+
+.form-control[readonly] {
+	cursor: not-allowed;
+}
+
+img {
+	&.club,
+	&.nation {
+		margin: .25rem .5rem;
+	}
+
+	&.club {
+		width: 1.813rem;
+	}
+
+	&.nation {
+		width: 2.625rem;
+	}
+
+	&.help {
+		cursor: help;
+	}
+}
+
+.badge {
+	display: inline-flex !important;
+	margin: .25rem;
+
+	.btn-close {
+		align-self: center;
+		filter: invert(1) grayscale(100%) brightness(200%);
+	}
+}
+
+.name-selected {
+	margin: .25rem .5rem;
+	align-self: center;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+input:disabled {
+	cursor: not-allowed;
+}
+
+.box {
+	width: 1rem;
+	height: 1.375rem;
+	border-radius: .25rem;
+	cursor: help;
+
+	&.red {
+		background-color: red;
+	}
+
+	&.yellow {
+		background-color: #ffc300;
+	}
 }

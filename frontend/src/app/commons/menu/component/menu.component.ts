@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Menu } from "../model/menu";
 import { fromEvent } from "rxjs";
+import { Menu } from "../model/menu";
 
 @Component({
 	selector: "app-menu",

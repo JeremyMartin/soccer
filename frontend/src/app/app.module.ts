@@ -1,39 +1,50 @@
-import { LOCALE_ID, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { registerLocaleData } from "@angular/common";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import localeEn from "@angular/common/locales/en";
 import localeFr from "@angular/common/locales/fr";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
+import { LOCALE_ID, NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 import { FaIconLibrary } from "@fortawesome/angular-fontawesome";
 import {
 	faAngleLeft,
 	faAngleRight,
 	faAnglesLeft,
 	faAnglesRight,
+	faCheck,
+	faChevronDown,
 	faChevronRight,
+	faCircleExclamation,
+	faCircleInfo,
 	faEye,
+	faPencil,
 	faPlus,
 	faShuffle,
+	faSliders,
 	faTrashAlt,
+	faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
-import { StoreModule } from "@ngrx/store";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { EffectsModule } from "@ngrx/effects";
+import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { MenuModule } from "./commons/menu/menu.module";
 import { DebugModule } from "./commons/debug/debug.module";
-import { FooterModule } from "./commons/footer/footer.module";
-import { NationService } from "./services/nation.service";
-import { ClubService } from "./services/club.service";
-import { MetaReducers, Reducers } from "./store/app.reducers";
-import { environment } from "../environments/environment";
-import { SpinnerModule } from "./commons/spinner/spinner.module";
-import { FEATURE_KEYSTORE_REFERENTIAL, ReferentialReducers } from "./store/referential/referential.reducers";
-import { ReferentialEffects } from "./store/referential/referential.effects";
 import { ErrorModule } from "./commons/error/error.module";
+import { FooterModule } from "./commons/footer/footer.module";
+import { MenuModule } from "./commons/menu/menu.module";
+import { SpinnerModule } from "./commons/spinner/spinner.module";
+import { ToastModule } from "./commons/toast/toast.module";
+import { ClubService } from "./services/club.service";
+import { MatchService } from "./services/match.service";
+import { NationService } from "./services/nation.service";
+import { StepService } from "./services/step.service";
+import { MetaReducers, Reducers } from "./store/app.reducers";
+import { ReferentialEffects } from "./store/referential/referential.effects";
+import { FEATURE_KEYSTORE_REFERENTIAL, ReferentialReducers } from "./store/referential/referential.reducers";
 
 // Register locale
 registerLocaleData(localeEn);
@@ -50,6 +61,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
+		NgbModule,
 		StoreModule.forRoot(Reducers, { metaReducers: MetaReducers }),
 		StoreModule.forFeature(FEATURE_KEYSTORE_REFERENTIAL, ReferentialReducers),
 		environment.production ? [] : StoreDevtoolsModule.instrument({ name: "soccer tournament" }),
@@ -63,6 +75,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 		FooterModule,
 		MenuModule,
 		SpinnerModule,
+		ToastModule,
 	],
 	providers: [
 		{
@@ -70,13 +83,32 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 			useValue: "en",
 		},
 		ClubService,
+		MatchService,
 		NationService,
 		TranslateService,
+		StepService,
 	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {
 	constructor(private faIconLibrary: FaIconLibrary) {
-		faIconLibrary.addIcons(faChevronRight, faPlus, faEye, faTrashAlt, faAngleLeft, faAnglesLeft, faAngleRight, faAnglesRight, faShuffle);
+		faIconLibrary.addIcons(
+			faAngleLeft,
+			faAnglesLeft,
+			faAngleRight,
+			faAnglesRight,
+			faCheck,
+			faCircleInfo,
+			faCircleExclamation,
+			faChevronRight,
+			faChevronDown,
+			faEye,
+			faPencil,
+			faPlus,
+			faShuffle,
+			faSliders,
+			faTrashAlt,
+			faTriangleExclamation
+		);
 	}
 }

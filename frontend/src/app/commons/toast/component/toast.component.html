@@ -1,0 +1,21 @@
+<div aria-atomic="true" aria-live="polite" class="toast-container">
+	<ngb-toast
+		*ngFor="let toast of toastService.toasts"
+		(hidden)="toastService.remove(toast)"
+		[autohide]="true"
+		[class]="toast.type"
+		[delay]="toast.delay || 5000">
+		<div class="d-flex justify-content-between">
+			<div>
+				<fa-icon *ngIf="toast.icon" [icon]="['fas', toast.icon]" class="me-1 fa-lg"></fa-icon>
+				{{ toast.message | translate }}
+			</div>
+			<button
+				(click)="toastService.remove(toast)"
+				[attr.aria-label]="'button.close' | translate"
+				class="btn-close ms-2"
+				data-bs-dismiss="toast"
+				type="button"></button>
+		</div>
+	</ngb-toast>
+</div>

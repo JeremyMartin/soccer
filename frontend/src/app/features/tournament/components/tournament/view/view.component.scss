@@ -1,0 +1,19 @@
+@import "src/custom";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/tables";
+
+
+.badge {
+	display: inline-flex !important;
+	margin: .25rem;
+}
+
+.name-selected {
+	margin: .25rem .5rem;
+	align-self: center;
+	font-size: 1rem;
+	font-weight: 500;
+}

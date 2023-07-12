@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { IndicatorComponent } from "./components/indicator/indicator.component";
+import { NgModule } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
+import { IndicatorComponent } from "./components/indicator/indicator.component";
 
 @NgModule({
 	declarations: [IndicatorComponent],

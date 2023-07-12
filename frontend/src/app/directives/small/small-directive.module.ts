@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { TableSmallDirectiveModule } from "./table/table-small-directive.module";
+import { NgModule } from "@angular/core";
 import { ButtonSmallDirectiveModule } from "./button/button-small-directive.module";
-import { SelectSmallDirectiveModule } from "./select/select-small-directive.module";
 import { PaginationSmallDirectiveModule } from "./pagination/pagination-small-directive.module";
+import { SelectSmallDirectiveModule } from "./select/select-small-directive.module";
+import { TableSmallDirectiveModule } from "./table/table-small-directive.module";
 
 @NgModule({
 	declarations: [],

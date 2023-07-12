@@ -18,8 +18,7 @@ public class ClubController {
 		this.clubService = clubService;
 	}
 
-	@GetMapping
-	@RequestMapping(path = "list")
+	@GetMapping(path = "list")
 	public ResponseEntity<?> list(@RequestParam(name = "full",required = false) final boolean withNation) {
 		return ResponseEntity.ok(this.clubService.list(withNation));
 	}

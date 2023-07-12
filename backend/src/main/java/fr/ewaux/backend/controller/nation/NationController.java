@@ -18,8 +18,7 @@ public class NationController {
 		this.nationService = nationService;
 	}
 
-	@GetMapping
-	@RequestMapping(path = "list")
+	@GetMapping(path = "list")
 	public ResponseEntity<?> list(@RequestParam(name = "full", required = false) final boolean withClub) {
 		return ResponseEntity.ok(this.nationService.list(withClub));
 	}

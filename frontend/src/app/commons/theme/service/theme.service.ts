@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy, Renderer2, RendererFactory2 } from "@angular/core";
-import { THEME_DARK, THEME_LIGHT, THEME_OS_DEFAULT } from "../utilities/theme.utilities";
 import { BehaviorSubject } from "rxjs";
+import { THEME_DARK, THEME_LIGHT, THEME_OS_DEFAULT } from "../utilities/theme.utilities";
 
 @Injectable({
 	providedIn: "root",

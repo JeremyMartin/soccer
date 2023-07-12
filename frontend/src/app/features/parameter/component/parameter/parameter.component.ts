@@ -6,4 +6,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
 	styleUrls: ["./parameter.component.scss"],
 	encapsulation: ViewEncapsulation.None,
 })
-export class ParameterComponent {}
+export class ParameterComponent {
+	readonly title: string = "page.parameters.default";
+}

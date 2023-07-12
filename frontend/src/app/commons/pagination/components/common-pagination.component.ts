@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { compareFn } from "../../utils/fn-utilities";
 import { EventPaging } from "../model/event-paging";
 import { Pager } from "../model/pager";
-import { compareFn } from "../../utils/fn-utilities";
 
 @Component({
 	selector: "app-master-pagination",
@@ -38,9 +38,9 @@ export abstract class CommonPaginationComponent implements OnChanges {
 
 	//
 	setPage(page: number) {
-		if (!this.items.length) {
-			return;
-		}
+		// if (!this.items.length) {
+		// 	return;
+		// }
 		// get new pager object for specified page
 		this.pager = this.paginate(+this.items.length, page, +this.pageSize, this.maxPages);
 

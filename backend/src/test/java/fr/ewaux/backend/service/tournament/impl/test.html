@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<script>
+			function go() {
+				var nn, n, k;
+				nn = "";
+				k = "";
+				ok = 1;
+				while ((ok = 1)) {
+					nn = eval(prompt("Entrez n :", nn));
+					if (nn == null) return;
+					k = eval(prompt("Entrez p :", k));
+					if (k == null) {
+						ok = 0;
+					}
+					if (k < nn - k) {
+						c = comb(nn, k);
+					} else {
+						c = comb(nn, nn - k);
+					}
+					a = c * fac(k);
+					if (ok == 1) {
+						alert("A(" + nn + "," + k + ") = " + a + " , C(" + nn + "," + k + ") = " + c);
+					}
+					if (!confirm("Autre calcul ?")) return;
+				}
+			}
+
+			function fac(n) {
+				if (n <= 1) {
+					return 1;
+				}
+				f = 1;
+				for (i = 2; i <= n; i++) {
+					f = f * i;
+				}
+				return f;
+			}
+
+			function comb(n, p) {
+				if (n == p || p == 0) {
+					return 1;
+				}
+				if (p == 1) {
+					return n;
+				}
+				num = n;
+				for (i = 1; i <= p - 1; i++) {
+					num = num * (n - i);
+				}
+				return num / fac(p);
+			}
+
+			go();
+		</script>
+	</head>
+	<body></body>
+</html>

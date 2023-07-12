@@ -2,14 +2,8 @@
 @import "bootstrap/scss/buttons";
 @import "bootstrap/scss/forms";
 @import "bootstrap/scss/badge";
+@import "bootstrap/scss/tooltip";
 
-img {
-	&.club,
-	&.nation {
-		width: 1.5rem;
-		margin-right: .25rem;
-	}
-}
 
 .badge {
 	display: inline-flex !important;
@@ -22,7 +16,7 @@ img {
 }
 
 .name-selected {
-	margin-right: .5rem;
+	margin: .25rem .5rem;
 	align-self: center;
 	font-size: 1rem;
 	font-weight: 500;

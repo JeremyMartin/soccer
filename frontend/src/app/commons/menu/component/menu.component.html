@@ -41,7 +41,7 @@
 						data-bs-toggle="dropdown"
 						href="#"
 						role="button">
-						{{ "menu." + menu.name + ".main" | translate }}
+						{{ "menu." + menu.name + ".default" | translate }}
 					</a>
 					<ul *ngIf="menu.subMenus" [attr.id]="menu.id" class="dropdown-menu">
 						<li *ngFor="let subMenu of menu.subMenus">

@@ -8,6 +8,7 @@ import javax.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -20,4 +21,8 @@ public abstract class AbstractLongEntity {
 	@Column(name = "id")
 	Long id;
 
+	@Override
+	public String toString() {
+		return "id:" + this.id;
+	}
 }

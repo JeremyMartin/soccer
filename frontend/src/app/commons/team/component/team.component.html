@@ -1,0 +1,16 @@
+<ng-container *ngIf="team.club">
+	<img
+		[src]="'assets/images/clubs/' + team.club.id + '.png'"
+		[attr.alt]="team.club.name"
+		[ngbTooltip]="team.club.name + (showPlayerName ? ' - ' + team.player.name : '')"
+		class="club help img-fluid" />
+</ng-container>
+<ng-container *ngIf="team.nation">
+	<img
+		[src]="'assets/images/nations/' + team.nation.id + '.png'"
+		[attr.alt]="currentLanguage === LANGUAGE_FR ? team.nation.nameFr : team.nation.nameEn"
+		[ngbTooltip]="
+			(currentLanguage === LANGUAGE_FR ? team.nation.nameFr : team.nation.nameEn) + (showPlayerName ? ' - ' + team.player.name : '')
+		"
+		class="nation help img-fluid" />
+</ng-container>

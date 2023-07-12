@@ -18,4 +18,8 @@
 		bottom: 0;
 		background-color: var(--#{$prefix}body-bg);
 	}
+
+	.alert{
+		min-width: 50vw;
+	}
 }

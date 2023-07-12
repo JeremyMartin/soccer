@@ -1,14 +1,18 @@
 {
 	"button": {
 		"add": {
-			"main": "Add",
+			"default": "Add",
 			"tournament": "Add a tournament"
 		},
 		"cancel": "Cancel",
 		"close": "Close",
 		"delete": {
-			"main": "Delete",
+			"default": "Delete",
 			"tournament": "Delete tournament"
+		},
+		"edit": {
+			"default": "Edit",
+			"score": "Edit score"
 		},
 		"generate": "Generate",
 		"next": "Next",
@@ -27,10 +31,31 @@
 		"submit": "Submit"
 	},
 	"error": {
+		"add": {
+			"tournament": "An error occurred while creating the tournament"
+		},
 		"default": "An error occurred",
+		"delete": {
+			"tournament": "An error occurred while deleting the tournament"
+		},
 		"load": {
+			"club": "Can't load clubs",
 			"nation": "Can't load nations",
-			"club": "Can't load clubs"
+			"step": "Can't load steps"
+		},
+		"not": {
+			"found": {
+				"tournament": "Tournament not found"
+			},
+			"supported": {
+				"method": "Unsupported method"
+			}
+		},
+		"type": {
+			"mismatch": "Type mismatch"
+		},
+		"update": {
+			"match": "An error occurred while updating match"
 		}
 	},
 	"menu": {
@@ -50,12 +75,13 @@
 		},
 		"breadcrumb": {
 			"add": "Add",
-			"main": "Breadcrumb",
+			"default": "Breadcrumb",
 			"list": "List",
 			"view": "View"
 		},
 		"choose": {
-			"main": "Choose",
+			"default": "Choose",
+			"name": "Choose name",
 			"nb": {
 				"group": "Number of group",
 				"player": "Number of player",
@@ -63,18 +89,10 @@
 			},
 			"preference": {
 				"team": "Choice of preferential teams"
-			},
-			"type": {
-				"leg": {
-					"first": "First leg",
-					"two": "Two legs"
-				},
-				"main": "Type",
-				"match": "Match type",
-				"team": "Type of teams"
 			}
 		},
 		"club": "Club",
+		"configuration": "Configuration",
 		"confirm": {
 			"delete": {
 				"title": "Delete confirmation",
@@ -83,48 +101,114 @@
 				}
 			}
 		},
-		"configuration": "Configuration",
-		"loading": "Loading...",
+		"date": "Date",
+		"edit": {
+			"score": {
+				"title": "Score modification"
+			}
+		},
+		"group": {
+			"default": "Group",
+			"named": "Group {{name}}"
+		},
+		"irreversible": "This action is irreversible",
+		"information": "Informations",
+		"loading": {
+			"default": "Loading",
+			"referential": "Loading referential's data",
+			"tournament": {
+				"default": "Loading tournament's data",
+				"list": "Loading tournament list"
+			}
+		},
+		"match": {
+			"played": {
+				"no": "Match not yet played",
+				"yes": "Match played"
+			}
+		},
 		"name": {
-			"main": "Name",
-			"player": "Name of player"
+			"default": "Name",
+			"player": "Name of player",
+			"tournament": "Tournament name"
+		},
+		"nb": {
+			"card": {
+				"red": "Number of red cards",
+				"yellow": "Number of yellow cards"
+			},
+			"group": "Number of group",
+			"player": "Number of player",
+			"team": "Number of team"
 		},
 		"national": "National",
 		"pagination": {
 			"choose": "Items per page"
 		},
+		"penalty": {
+			"default": "On penalties",
+			"winner": "{{winner}} wins {{goalsWinner}} - {{goalsLoser}} on penalties"
+		},
 		"placeholder": {
 			"enter": {
 				"name": {
-					"main":"Enter name",
-					"club": "Enter club name",
-					"nation": "Enter the name of the national team"
+					"default": "Enter name",
+					"club": "Enter club's name",
+					"nation": "Enter national team's name",
+					"tournament": "Enter tournament's name"
+				},
+				"nb": {
+					"player": "Enter number of player"
 				}
 			}
 		},
 		"players": "Players",
 		"random": "Random",
+		"ranking": {
+			"default": "Ranking",
+			"play": "P",
+			"win": "W",
+			"draw": "D",
+			"lose": "L",
+			"difference": "GD",
+			"points": "Pts"
+		},
+		"result": {
+			"default": "Result",
+			"match": "Match result",
+			"card": "Card"
+		},
+		"stage": "Stage",
 		"teams": "Teams",
 		"theme": {
-			"main": "Theme",
+			"default": "Theme",
 			"dark": "Dark",
 			"light": "Light",
 			"os-default": "Os default"
+		},
+		"type": {
+			"default": "Type",
+			"match": {
+				"default": "Match type",
+				"1": "First leg",
+				"2": "Two legs"
+			},
+			"team": "Type of teams"
 		}
 	},
 	"page": {
 		"error": {
 			"404": {
-				"main": "Page not found"
+				"default": "Page not found"
 			}
 		},
 		"home": {
-			"main": "Welcome to the soccer tournament management platform"
+			"default": "Welcome to the soccer tournament management platform"
 		},
 		"parameters": {
-			"main": "Parameters",
+			"default": "Parameters",
 			"preference": {
-				"main": "Preferences",
+				"default": "Preferences",
 				"toggle": "Open / close preferences",
 				"language": "Language",
 				"theme": "Theme"
@@ -132,14 +216,26 @@
 		},
 		"tournament": {
 			"list": {
-				"main": "List of tournaments"
+				"default": "List of tournaments",
+				"empty": "No tournament"
 			},
 			"add": {
-				"main": "Add a tournament"
+				"default": "Add a tournament"
 			},
 			"view": {
-				"main": "View a tournament"
+				"default": "View a tournament"
 			}
+		}
+	},
+	"success": {
+		"add": {
+			"tournament": "Tournament successfully added"
+		},
+		"delete": {
+			"tournament": "Tournament successfully deleted"
+		},
+		"update": {
+			"match": "Match updated successfully"
 		}
 	}
 }

@@ -2,7 +2,8 @@ package fr.ewaux.backend.mapper.nation;
 
 import fr.ewaux.backend.entity.nation.NationEntity;
 import fr.ewaux.backend.mapper.club.ClubMapper;
-import fr.ewaux.backend.model.soccer.nation.Nation;
+import fr.ewaux.backend.model.request.nation.NationRequest;
+import fr.ewaux.backend.model.response.nation.NationResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -11,39 +12,54 @@ import org.apache.commons.collections4.CollectionUtils;
 
 public final class NationMapper {
 
-	private NationMapper() {
-	}
-
-	public static Nation mapEntityToSingleModel(final NationEntity entity) {
+	public static NationResponse mapEntityToModel(final NationEntity entity) {
 		if (Objects.isNull(entity)) {
 			return null;
 		}
-		Nation model = new Nation();
+		NationResponse model = new NationResponse();
 		buildDefault(entity, model);
 		return model;
 	}
 
-	public static Nation mapEntityToModelWithClub(final NationEntity entity) {
+	public static NationResponse mapEntityToModelWithClub(final NationEntity entity) {
 		if (Objects.isNull(entity)) {
 			return null;
 		}
-		Nation model = new Nation();
+		NationResponse model = new NationResponse();
 		buildDefault(entity, model);
-		model.setClubs(ClubMapper.mapEntitiesToSimpleSetModels(entity.getClubs(), Boolean.FALSE));
+		model.setClubs(ClubMapper.mapEntitiesToModels(entity.getClubs(), Boolean.FALSE));
 		return model;
 	}
 
-	public static Set<Nation> mapEntitiesToSetModels(final List<NationEntity> entities, boolean withClubs) {
+	public static Set<NationResponse> mapEntitiesToModels(final List<NationEntity> entities, boolean withClubs) {
 		if (CollectionUtils.isEmpty(entities)) {
 			return null;
 		}
 		return entities.stream()
 			.filter(Objects::nonNull)
-			.map(withClubs ? NationMapper::mapEntityToModelWithClub : NationMapper::mapEntityToSingleModel)
+			.map(withClubs ? NationMapper::mapEntityToModelWithClub : NationMapper::mapEntityToModel)
 			.collect(Collectors.toSet());
 	}
 
-	private static void buildDefault(final NationEntity entity, final Nation model) {
+	public static NationEntity mapModelToEntity(final NationRequest request) {
+		if (Objects.isNull(request)) {
+			return null;
+		}
+		NationEntity entity = new NationEntity();
+		entity.setId(request.getId());
+		entity.setNameEn(request.getNameEn());
+		entity.setNameFr(request.getNameFr());
+		if (Objects.nonNull(request.getClubs())) {
+			entity.setClubs(request.getClubs()
+				.stream()
+				.filter(Objects::nonNull)
+				.map(ClubMapper::mapModelToEntity)
+				.collect(Collectors.toList()));
+		}
+		return entity;
+	}
+
+	private static void buildDefault(final NationEntity entity, final NationResponse model) {
 		model.setId(entity.getId());
 		model.setNameEn(entity.getNameEn());
 		model.setNameFr(entity.getNameFr());

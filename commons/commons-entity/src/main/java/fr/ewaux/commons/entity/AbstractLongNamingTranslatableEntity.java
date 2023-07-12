@@ -5,6 +5,7 @@ import javax.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -12,8 +13,13 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true)
 public abstract class AbstractLongNamingTranslatableEntity extends AbstractLongEntity {
 
-	@Column(name = "name_en", nullable = false, columnDefinition = "varchar(500)")
+	@Column(name = "name_en", nullable = false, columnDefinition = "VARCHAR(500)")
 	String nameEn;
-	@Column(name = "name_fr", nullable = false, columnDefinition = "varchar(500)")
+	@Column(name = "name_fr", nullable = false, columnDefinition = "VARCHAR(500)")
 	String nameFr;
+
+	@Override
+	public String toString() {
+		return super.toString() + ", nameEn:" + this.nameEn + ", nameFr:" + this.nameFr;
+	}
 }

@@ -1,5 +1,5 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 import { ButtonOutlineLightOrDarkDirective } from "./directive/button-outline-light-or-dark.directive";
 
 @NgModule({

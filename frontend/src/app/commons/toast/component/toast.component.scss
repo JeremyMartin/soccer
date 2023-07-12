@@ -1,0 +1,49 @@
+@import "src/custom";
+@import "bootstrap/scss/toasts";
+
+@mixin toast-color($bg-color:$primary,$text-color:$white) {
+	color: $text-color;
+	$color-bg: to-rgb($bg-color);
+	background-color: RGBA($color-bg, 1);
+}
+
+.toast-container {
+	position: fixed;
+	top: 3.563rem;
+	right: 0;
+	padding: 0 .5rem;
+	max-height: calc(100vh - 3.563rem);
+	overflow: auto;
+	pointer-events: auto;
+	&::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+
+	.toast {
+		--#{$prefix}toast-spacing: .5rem;
+
+		&.error {
+			@include toast-color($danger);
+		}
+
+		&.info {
+			@include toast-color($cyan-600);
+		}
+
+		&.success {
+			@include toast-color($success);
+		}
+
+		&.warn {
+			@include toast-color($orange);
+		}
+
+		.btn-close {
+			position: relative;
+			top: 0;
+			right: 0;
+			filter: invert(1) grayscale(100%) brightness(200%);
+		}
+	}
+}

@@ -1,6 +1,7 @@
+<ng-content></ng-content>
 <div class="container-error" [class.full]="isFullPage">
 	<div class="alert alert-danger" role="alert">
-		<h4>{{ "error.default" | translate }}</h4>
-		<p *ngFor="let error of errors" class="m-1">{{ error | translate }}</p>
+		<h2 class="fs-5">{{ "error.default" | translate }}</h2>
+		<p *ngFor="let error of errors" class="my-1">{{ error | translate }}</p>
 	</div>
 </div>

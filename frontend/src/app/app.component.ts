@@ -10,10 +10,13 @@ import { combineLatest, take } from "rxjs";
 import {
 	selectErrorClubs,
 	selectErrorNations,
+	selectErrorSteps,
 	selectIsLoadedClubs,
 	selectIsLoadedNations,
+	selectIsLoadedSteps,
 	selectIsLoadingClubs,
 	selectIsLoadingNations,
+	selectIsLoadingSteps,
 } from "./store/referential/referential.selectors";
 import { initReferential } from "./store/referential/referential.actions";
 
@@ -50,44 +53,102 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.errors = new Set<string>();
-		combineLatest([
-			this.storeReferential.select(selectIsLoadingClubs),
-			this.storeReferential.select(selectIsLoadedClubs),
-			this.storeReferential.select(selectErrorClubs),
-			this.storeReferential.select(selectIsLoadingNations),
-			this.storeReferential.select(selectIsLoadedNations),
-			this.storeReferential.select(selectErrorNations),
-		])
-			.pipe(take(1))
-			.subscribe(([loadingClubs, loadedClubs, errorClubs, loadingNations, loadedNations, errorNations]) => {
-				if (!loadingClubs && !loadedClubs && !errorClubs && !loadingNations && !loadedNations && !errorNations) {
-					this.isLoading = true;
-					this.storeReferential.dispatch(initReferential());
+		(async () => {
+			const initialize: AppInit = await this.initializeReferential();
+			if (initialize === AppInit.LOADING || initialize === AppInit.ALREADY_LOADED) {
+				const check: AppInit = await this.checkReferential();
+				if (check === AppInit.ERROR) {
+					this.isLoading = false;
+					this.hasErrors = true;
+				} else {
+					this.isLoading = false;
+					this.hasErrors = false;
 				}
-			});
-		combineLatest([
-			this.storeReferential.select(selectIsLoadingClubs),
-			this.storeReferential.select(selectIsLoadedClubs),
-			this.storeReferential.select(selectErrorClubs),
-			this.storeReferential.select(selectIsLoadingNations),
-			this.storeReferential.select(selectIsLoadedNations),
-			this.storeReferential.select(selectErrorNations),
-		]).subscribe(([loadingClubs, loadedClubs, errorClubs, loadingNations, loadedNations, errorNations]) => {
-			const isLoading = !loadingClubs && loadedClubs && !loadingNations && loadedNations;
-			const hasErrors = errorClubs !== null && errorNations !== null;
-			if (errorClubs !== null) {
-				this.errors.add("error.load.club");
-			}
-			if (errorNations !== null) {
-				this.errors.add("error.load.nation");
-			}
-			if (isLoading || hasErrors) {
+			} else {
 				this.isLoading = false;
+				this.hasErrors = false;
 			}
-			if (hasErrors) {
-				this.hasErrors = true;
-			}
+		})();
+	}
+
+	private initializeReferential(): Promise<AppInit> {
+		this.isLoading = true;
+		return new Promise<AppInit>((resolve) => {
+			combineLatest([
+				this.storeReferential.select(selectIsLoadingClubs),
+				this.storeReferential.select(selectIsLoadedClubs),
+				this.storeReferential.select(selectErrorClubs),
+				this.storeReferential.select(selectIsLoadingNations),
+				this.storeReferential.select(selectIsLoadedNations),
+				this.storeReferential.select(selectErrorNations),
+				this.storeReferential.select(selectIsLoadingSteps),
+				this.storeReferential.select(selectIsLoadedSteps),
+				this.storeReferential.select(selectErrorSteps),
+			])
+				.pipe(take(1))
+				.subscribe(
+					([loadingClubs, loadedClubs, errorClubs, loadingNations, loadedNations, errorNations, loadingSteps, loadedSteps, errorSteps]) => {
+						if (
+							!loadingClubs &&
+							!loadedClubs &&
+							!errorClubs &&
+							!loadingNations &&
+							!loadedNations &&
+							!errorNations &&
+							!loadingSteps &&
+							!loadedSteps &&
+							!errorSteps
+						) {
+							this.storeReferential.dispatch(initReferential());
+							resolve(AppInit.LOADING);
+						} else {
+							resolve(AppInit.ALREADY_LOADED);
+						}
+					}
+				);
 		});
 	}
+
+	private checkReferential(): Promise<AppInit> {
+		return new Promise<AppInit>((resolve) => {
+			combineLatest([
+				this.storeReferential.select(selectIsLoadingClubs),
+				this.storeReferential.select(selectIsLoadedClubs),
+				this.storeReferential.select(selectErrorClubs),
+				this.storeReferential.select(selectIsLoadingNations),
+				this.storeReferential.select(selectIsLoadedNations),
+				this.storeReferential.select(selectErrorNations),
+				this.storeReferential.select(selectIsLoadingSteps),
+				this.storeReferential.select(selectIsLoadedSteps),
+				this.storeReferential.select(selectErrorSteps),
+			]).subscribe(
+				([loadingClubs, loadedClubs, errorClubs, loadingNations, loadedNations, errorNations, loadingSteps, loadedSteps, errorSteps]) => {
+					const isLoaded = !loadingClubs && loadedClubs && !loadingNations && loadedNations && !loadingSteps && loadedSteps;
+					const hasErrors = errorClubs !== null && errorNations !== null && errorSteps !== null;
+					if (errorClubs !== null) {
+						this.errors.add("error.load.club");
+					}
+					if (errorNations !== null) {
+						this.errors.add("error.load.nation");
+					}
+					if (errorNations !== null) {
+						this.errors.add("error.load.step");
+					}
+					if (isLoaded) {
+						resolve(AppInit.SUCCESS);
+					}
+					if (hasErrors) {
+						resolve(AppInit.ERROR);
+					}
+				}
+			);
+		});
+	}
+}
+
+export enum AppInit {
+	ALREADY_LOADED,
+	ERROR,
+	LOADING,
+	SUCCESS,
 }

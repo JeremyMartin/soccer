@@ -1,21 +1,38 @@
-<div class="modal fade" [attr.id]="'confirm' + id" tabindex="-1" aria-labelledby="confirmTitle" aria-hidden="true">
-	<div class="modal-dialog">
+<div
+	[attr.id]="'confirm' + id"
+	class="modal fade"
+	tabindex="-1"
+	aria-labelledby="confirmTitle"
+	aria-hidden="true"
+	data-bs-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="confirmTitle">{{ titleKeyLabel | translate }}</h1>
+				<h1 class="modal-title fs-5" id="confirmTitle">
+					{{ titleKeyLabel | translate }}
+				</h1>
 				<button
 					[attr.id]="'btnConfirmClose' + id"
-					type="button"
+					[attr.aria-label]="'button.close' | translate"
 					class="btn-close"
 					data-bs-dismiss="modal"
-					[attr.aria-label]="'button.close' | translate"></button>
+					type="button"></button>
 			</div>
 			<div class="modal-body">
 				<ng-content></ng-content>
 			</div>
 			<div class="modal-footer">
-				<button type="button" btnOutlineLightOrDark class="btn" data-bs-dismiss="modal">{{ "button.cancel" | translate }}</button>
-				<button type="button" class="btn btn-primary" (click)="onClickConfirm()">{{ confirmKeyLabel | translate }}</button>
+				<button btnOutlineLightOrDark class="btn" data-bs-dismiss="modal" type="button">
+					{{ "button.cancel" | translate }}
+				</button>
+				<button
+					[ngClass]="confirmClass ? confirmClass : 'btn-primary'"
+					(click)="onClickConfirm()"
+					class="btn"
+					data-bs-dismiss="modal"
+					type="button">
+					{{ confirmKeyLabel | translate }}
+				</button>
 			</div>
 		</div>
 	</div>

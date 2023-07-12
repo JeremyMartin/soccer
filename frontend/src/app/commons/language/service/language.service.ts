@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Language } from "../model/language";
-import { BehaviorSubject } from "rxjs";
-import { ALL_LANGUAGES, KEY_PREFERS_LANG, LANGUAGE_EN, LANGUAGE_FR } from "../utilities/language.utilities";
 import { TranslateService } from "@ngx-translate/core";
+import { BehaviorSubject } from "rxjs";
+import { Language } from "../model/language";
+import { ALL_LANGUAGES, KEY_PREFERS_LANG, LANGUAGE_EN, LANGUAGE_FR } from "../utilities/language.utilities";
 
 @Injectable({
 	providedIn: "root",

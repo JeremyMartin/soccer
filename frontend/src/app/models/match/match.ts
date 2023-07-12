@@ -11,4 +11,9 @@ export interface Match extends Identifier {
 	penalty?: boolean;
 	homePenalty?: number;
 	awayPenalty?: number;
+	homeYellowCard?: number;
+	homeRedCard?: number;
+	awayYellowCard?: number;
+	awayRedCard?: number;
+	played?: boolean;
 }

@@ -1,7 +1,12 @@
+import { Match } from "../../../models/match/match";
+import { Step } from "../../../models/step/step";
 import { Tournament } from "../../../models/tournament/tournament";
 
 export function calculateNbPoolByNbTeams(nbTeams: number): number {
-	return Math.ceil(nbTeams / 4);
+	if (nbTeams < 6) {
+		return 1;
+	}
+	return Math.round(nbTeams / 4);
 }
 
 export function randomDate(start: Date): Date {
@@ -30,3 +35,15 @@ export function generateTournaments(): Array<Tournament> {
 	tournaments.push({ id: 31, name: name });
 	return tournaments;
 }
+
+export const QUALIFYING_STAGE: Step = {
+	id: 1,
+	nameEn: "Qualifying stage",
+	nameFr: "Phase de qualification",
+};
+
+export const FINAL_STAGE: Step = {
+	id: 2,
+	nameEn: "Final stage",
+	nameFr: "Phase de finale",
+};

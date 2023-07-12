@@ -1,7 +1,7 @@
 import { ActionReducer, ActionReducerMap, MetaReducer } from "@ngrx/store";
+import { environment } from "../../environments/environment";
 import { AppState } from "./app.state";
 import { ReferentialReducers } from "./referential/referential.reducers";
-import { environment } from "../../environments/environment";
 
 export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
 	return (state, action) => {

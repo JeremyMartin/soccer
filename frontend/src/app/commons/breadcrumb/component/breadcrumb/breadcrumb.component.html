@@ -1,4 +1,4 @@
-<nav [attr.aria-label]="'label.breadcrumb.main' | translate">
+<nav [attr.aria-label]="'label.breadcrumb.default' | translate">
 	<ol class="breadcrumb">
 		<ng-container *ngFor="let item of items; let idx = index">
 			<li *ngIf="item.action && item.action.path && idx !== items.length - 1" class="breadcrumb-item">

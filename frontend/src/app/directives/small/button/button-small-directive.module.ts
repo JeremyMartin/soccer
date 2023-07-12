@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ButtonSmallDirective } from "./directive/button-small.directive";
+import { NgModule } from "@angular/core";
 import { ButtonGroupSmallDirective } from "./directive/button-group-small.directive";
+import { ButtonSmallDirective } from "./directive/button-small.directive";
 
 @NgModule({
 	declarations: [ButtonSmallDirective, ButtonGroupSmallDirective],

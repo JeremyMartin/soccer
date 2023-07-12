@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { LANG_EN, LANG_FR, LANGUAGE_EN, LANGUAGE_FR } from "../../utilities/language.utilities";
 import { Language } from "../../model/language";
 import { LanguageService } from "../../service/language.service";
+import { LANG_EN, LANG_FR, LANGUAGE_EN, LANGUAGE_FR } from "../../utilities/language.utilities";
 
 @Component({
 	selector: "app-language",

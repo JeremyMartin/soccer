@@ -23,4 +23,5 @@ public final class MessageHelper {
 	public static final String ERROR_URL_NOT_FOUND = "error.url.not.found";
 	public static final String ERROR_FILE = "error.file";
 	public static final String ERROR_EXTERNAL_WEB_API = "error.external.web.api";
+	public static final String ERROR_ENTITY_NOT_FOUND = "Entity not found";
 }

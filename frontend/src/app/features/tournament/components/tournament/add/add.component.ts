@@ -1,23 +1,28 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { FormStep } from "../../../../../commons/form-step/model/form-step";
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { notEmptyValidator } from "../../../../../validators/notEmptyValidator";
+import { Router } from "@angular/router";
+import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap/typeahead/typeahead";
+import { Store } from "@ngrx/store";
+import { combineLatest, debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from "rxjs";
+import { BreadcrumbItem } from "../../../../../commons/breadcrumb/model/breadcrumb-item";
+import { FormStep } from "../../../../../commons/form-step/model/form-step";
+import { Language } from "../../../../../commons/language/model/language";
+import { LanguageService } from "../../../../../commons/language/service/language.service";
+import { LANGUAGE_FR } from "../../../../../commons/language/utilities/language.utilities";
+import { ToastService } from "../../../../../commons/toast/service/toast.service";
+import { INVALID, VALID } from "../../../../../commons/utils/css-utilities";
 import { compareFn, generateArrayNumber, normalizeText } from "../../../../../commons/utils/fn-utilities";
 import { Club } from "../../../../../models/club/club";
 import { Nation } from "../../../../../models/nation/nation";
-import { calculateNbPoolByNbTeams } from "../../../utilities/tournament.utilities";
-import { Store } from "@ngrx/store";
-import { ReferentialState } from "../../../../../store/referential/referential.state";
-import { combineLatest, debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from "rxjs";
-import { selectClubs, selectNations } from "../../../../../store/referential/referential.selectors";
-import { LanguageService } from "../../../../../commons/language/service/language.service";
-import { Language } from "../../../../../commons/language/model/language";
-import { LANGUAGE_FR } from "../../../../../commons/language/utilities/language.utilities";
-import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap/typeahead/typeahead";
-import { BreadcrumbItem } from "../../../../../commons/breadcrumb/model/breadcrumb-item";
-import { INVALID, VALID } from "../../../../../commons/utils/css-utilities";
-import { Team } from "../../../../../models/team/team";
 import { Player } from "../../../../../models/player/player";
+import { Team } from "../../../../../models/team/team";
+import { Tournament } from "../../../../../models/tournament/tournament";
+import { TournamentService } from "../../../../../services/tournament.service";
+import { selectClubs, selectNations } from "../../../../../store/referential/referential.selectors";
+import { ReferentialState } from "../../../../../store/referential/referential.state";
+import { notEmptyValidator } from "../../../../../validators/customValidators";
+import { calculateNbPoolByNbTeams } from "../../../utilities/tournament.utilities";
 
 @Component({
 	selector: "app-add",
@@ -26,6 +31,12 @@ import { Player } from "../../../../../models/player/player";
 	encapsulation: ViewEncapsulation.None,
 })
 export class AddComponent implements OnInit, AfterViewInit {
+	readonly title: string = "page.tournament.add.default";
+	readonly breadcrumbItems: Array<BreadcrumbItem> = [
+		{ name: "menu.home", action: { path: "/" } },
+		{ name: "menu.tournament", action: { path: "/tournament" } },
+		{ name: "label.breadcrumb.add" },
+	];
 	readonly LANGUAGE_FR = LANGUAGE_FR;
 	isLoading: boolean = true;
 	formSteps: Array<FormStep> = [{ label: "label.configuration" }, { label: "label.players" }, { label: "label.teams" }];
@@ -33,9 +44,10 @@ export class AddComponent implements OnInit, AfterViewInit {
 	groups: Array<number> = [1];
 	form: FormGroup = this.fb.group({
 		configuration: this.fb.group({
+			name: new FormControl(null, [Validators.required, notEmptyValidator]),
 			nbPlayers: new FormControl(2, [Validators.required, Validators.min(2)]),
 			typeMatch: new FormControl("1", [Validators.required]),
-			nbGroups: new FormControl(null, [Validators.required]),
+			nbGroup: new FormControl(1, [Validators.required]),
 			typeTeam: new FormControl("club", [Validators.required]),
 		}),
 		players: this.fb.array([], [Validators.required, Validators.min(2)]),
@@ -51,21 +63,19 @@ export class AddComponent implements OnInit, AfterViewInit {
 	allNations: Array<Nation> = [];
 	selectedNations: Array<Nation> = [];
 	currentLanguage!: Language;
-	@ViewChild("preferred")
-	preferred!: ElementRef;
-	breadcrumbItems: Array<BreadcrumbItem> = [
-		{ name: "menu.home", action: { path: "/" } },
-		{ name: "menu.tournament", action: { path: "/tournament" } },
-		{ name: "label.breadcrumb.add" },
-	];
 	teamsClub: Array<Club> = [];
 	teamsNation: Array<Nation> = [];
 	isSubmit: boolean = false;
+	@ViewChild("preferred")
+	private preferred!: ElementRef;
 
 	constructor(
 		private readonly fb: FormBuilder,
 		private readonly storeReferential: Store<ReferentialState>,
-		private readonly languageService: LanguageService
+		private readonly languageService: LanguageService,
+		private readonly toastService: ToastService,
+		private readonly tournamentService: TournamentService,
+		private readonly router: Router
 	) {
 		languageService.currentLanguage.subscribe((language) => (this.currentLanguage = language));
 	}
@@ -129,8 +139,8 @@ export class AddComponent implements OnInit, AfterViewInit {
 			.get("configuration")
 			?.get("nbPlayers")
 			?.valueChanges.subscribe((value) => {
-				this.form.get("configuration")?.get("nbGroups")?.setValue(null);
-				this.form.get("configuration")?.get("nbGroups")?.updateValueAndValidity();
+				this.form.get("configuration")?.get("nbGroup")?.setValue(null);
+				this.form.get("configuration")?.get("nbGroup")?.updateValueAndValidity();
 				this.groups = generateArrayNumber(1, calculateNbPoolByNbTeams(value) + 1);
 				const size = this.players.length;
 				if (size < value) {
@@ -185,7 +195,7 @@ export class AddComponent implements OnInit, AfterViewInit {
 		setTimeout(() => {
 			switch (this.currentFormStep) {
 				case 1:
-					document.getElementById("nbPlayers")?.focus();
+					document.getElementById("name")?.focus();
 					break;
 				case 2:
 					document.getElementById("player0")?.focus();
@@ -244,11 +254,19 @@ export class AddComponent implements OnInit, AfterViewInit {
 
 	getStyleValidation(key: string): string {
 		switch (key) {
+			case "name":
+				if (this.form.get("configuration")?.get("name")?.dirty || this.form.get("configuration")?.get("name")?.touched) {
+					return this.form.get("configuration")?.get("name")?.valid ? VALID : INVALID;
+				}
+				return "";
 			case "nbPlayers":
-				return this.form.get("configuration")?.get("nbPlayers")?.valid ? VALID : INVALID;
-			case "nbGroups":
-				if (this.form.get("configuration")?.get("nbGroups")?.dirty || this.form.get("configuration")?.get("nbGroups")?.touched) {
-					return this.form.get("configuration")?.get("nbGroups")?.valid ? VALID : INVALID;
+				if (this.form.get("configuration")?.get("nbPlayers")?.dirty || this.form.get("configuration")?.get("nbPlayers")?.touched) {
+					return this.form.get("configuration")?.get("nbPlayers")?.valid ? VALID : INVALID;
+				}
+				return "";
+			case "nbGroup":
+				if (this.form.get("configuration")?.get("nbGroup")?.dirty || this.form.get("configuration")?.get("nbGroup")?.touched) {
+					return this.form.get("configuration")?.get("nbGroup")?.valid ? VALID : INVALID;
 				}
 				return "";
 			default:
@@ -338,7 +356,7 @@ export class AddComponent implements OnInit, AfterViewInit {
 		return this.selectedClubs.sort((a, b) => (sortByName ? compareFn(a.name, b.name) : compareFn(a.shortName, b.shortName)));
 	}
 
-	sortNationssByName(): Array<Nation> {
+	sortNationsByName(): Array<Nation> {
 		return this.selectedNations.sort((a, b) =>
 			this.currentLanguage === LANGUAGE_FR ? compareFn(a.nameFr, b.nameFr) : compareFn(a.nameEn, b.nameEn)
 		);
@@ -364,7 +382,7 @@ export class AddComponent implements OnInit, AfterViewInit {
 	}
 
 	removeSelectedTeam(indexFormControl: number): void {
-		if (indexFormControl !== null && indexFormControl !== undefined) {
+		if (indexFormControl !== null && indexFormControl !== undefined && this.teams.controls[indexFormControl]) {
 			const clubOrNation: Club | Nation = this.teams.controls[indexFormControl].get("clubOrNation")?.value;
 			if (clubOrNation) {
 				if (this.isTypeTeam("club")) {
@@ -495,6 +513,34 @@ export class AddComponent implements OnInit, AfterViewInit {
 				teams.push({ player: player, nation: this.getFormControlAsNation(i) });
 			}
 		}
-		console.log(teams);
+		const name: string = this.form.get("configuration")?.get("name")?.value;
+		const typeMatch: number = +this.form.get("configuration")?.get("typeMatch")?.value || 1;
+		const nbGroup: number = +this.form.get("configuration")?.get("nbGroup")?.value || 1;
+		const tournament: Tournament = { name: name, matchType: typeMatch, nbGroup: nbGroup, teams: teams };
+		this.tournamentService.add(tournament).subscribe({
+			next: (result) => {
+				this.reactivateForm();
+				if (result && result.id) {
+					this.toastService.showSuccess("success.add.tournament");
+					this.router.navigate(["/tournament/consult", result.id]).then();
+				} else {
+					console.warn(result);
+					this.toastService.showError("error.add.tournament");
+				}
+			},
+			error: (err: HttpErrorResponse) => {
+				console.error(err);
+				this.toastService.showError("error.add.tournament");
+				this.reactivateForm();
+			},
+		});
+	}
+
+	private reactivateForm(): void {
+		this.isSubmit = false;
+		this.form.enable({ onlySelf: true, emitEvent: false });
+		document.querySelectorAll(".badge>.btn-close")?.forEach((btn) => {
+			btn.removeAttribute("disabled");
+		});
 	}
 }

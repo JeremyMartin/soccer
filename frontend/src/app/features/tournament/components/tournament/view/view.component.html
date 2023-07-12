@@ -1,6 +1,206 @@
 <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
-<div class="d-flex">
-	<div class="col-12 text-center">
-		<h1 id="title">{{ "page.tournament.view.main" | translate }}</h1>
+<app-spinner *ngIf="isLoading && !errors.size" [message]="'label.loading.tournament.default'"></app-spinner>
+<app-error *ngIf="errors.size" [errors]="errors">
+	<app-title [title]="title"></app-title>
+</app-error>
+<ng-container *ngIf="!isLoading && !errors.size && tournament">
+	<app-title [title]="title"></app-title>
+	<div class="row">
+		<div class="col-12 col-lg-8 offset-lg-2">
+			<div class="card shadow">
+				<div class="card-body">
+					<section class="card-collapse">
+						<h2 class="card-subtitle">
+							<button
+								class="collapse-button"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#informations"
+								aria-expanded="true"
+								aria-controls="informations"
+								[attr.aria-label]="'label.information' | translate">
+								<fa-icon [icon]="['fas', 'circle-info']" aria-hidden="true"></fa-icon>
+								{{ "label.information" | translate }}
+								<fa-icon [icon]="['fas', 'chevron-down']" aria-hidden="true"></fa-icon>
+							</button>
+						</h2>
+						<div id="informations" class="card-collapse show">
+							<div class="row row-cols-1 row-cols-md-2 g-3 mt-3">
+								<div class="col">
+									<div class="table table-borderless mb-0">
+										<tbody>
+											<tr class="align-middle">
+												<th scope="row" class="align-self-center">{{ "label.name.tournament" | translate }}</th>
+												<td>{{ tournament.name }}</td>
+											</tr>
+											<tr class="align-middle">
+												<th scope="row">{{ "label.nb.player" | translate }}</th>
+												<td>{{ tournament.teams?.length }}</td>
+											</tr>
+											<tr class="align-middle">
+												<th scope="row">{{ "label.type.match.default" | translate }}</th>
+												<td>{{ "label.type.match." + tournament.matchType | translate }}</td>
+											</tr>
+											<tr class="align-middle">
+												<th scope="row">{{ "label.nb.group" | translate }}</th>
+												<td>{{ tournament.groups?.length || 1 }}</td>
+											</tr>
+											<tr *ngIf="tournament.step" class="align-middle">
+												<th scope="row">{{ "label.stage" | translate }}</th>
+												<td>{{ currentLanguage === LANGUAGE_FR ? tournament.step.nameFr : tournament.step.nameEn }}</td>
+											</tr>
+										</tbody>
+									</div>
+								</div>
+								<div class="col mt-sm-1 mt-md-4">
+									<div class="mb-2 ps-2">
+										<span class="fw-bold">{{ "label.teams" | translate }}</span>
+									</div>
+									<div>
+										<ng-container *ngFor="let t of sortTeams()">
+											<div class="badge rounded-pill bg-primary">
+												<span class="name-selected">{{ t.player.name }}</span>
+												<app-team [team]="t"></app-team>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
+
+	<div class="row mt-3">
+		<div class="col-12 col-lg-8 offset-lg-2">
+			<ul ngbNav [(activeId)]="activeTab" #nav="ngbNav" class="nav-tabs">
+				<li *ngIf="tournament.groups" [ngbNavItem]="1" class="nav-item">
+					<a ngbNavLink>
+						{{ getQualifyingStage() }}
+					</a>
+					<ng-template ngbNavContent>
+						<div class="row">
+							<div *ngFor="let g of sortGroups()" class="col-12 mt-3">
+								<div class="card shadow">
+									<div class="card-body">
+										<section class="card-collapse">
+											<h3 class="card-subtitle">
+												<button
+													[attr.id]="'titleGroup' + g.name"
+													[attr.data-bs-target]="'#group' + g.name"
+													[attr.aria-controls]="'group' + g.name"
+													class="collapse-button text-center"
+													type="button"
+													data-bs-toggle="collapse"
+													aria-expanded="true">
+													{{ "label.group.named" | translate : { name: g.name } }}
+													<fa-icon [icon]="['fas', 'chevron-down']" aria-hidden="true"></fa-icon>
+												</button>
+											</h3>
+											<div [attr.id]="'group' + g.name" class="card-collapse show">
+												<div class="row row-cols-1 row-cols-md-2 g-3 mt-3">
+													<div class="col order-first order-md-last">
+														<table class="table w-75 mx-auto mb-0" [attr.aria-label]="'label.ranking.default' | translate">
+															<thead>
+																<tr class="border-bottom">
+																	<th scope="col" colspan="2"></th>
+																	<th scope="col" class="text-center">{{ "label.ranking.play" | translate }}</th>
+																	<th scope="col" class="text-center">{{ "label.ranking.win" | translate }}</th>
+																	<th scope="col" class="text-center">{{ "label.ranking.draw" | translate }}</th>
+																	<th scope="col" class="text-center">{{ "label.ranking.lose" | translate }}</th>
+																	<th scope="col" class="text-center">{{ "label.ranking.difference" | translate }}</th>
+																	<th scope="col" class="text-center">{{ "label.ranking.points" | translate }}</th>
+																</tr>
+															</thead>
+															<tbody>
+																<ng-container *ngIf="g.rankings && g.rankings.length">
+																	<tr *ngFor="let r of sortRanking(g.rankings)" class="align-middle">
+																		<td class="text-end">{{ r.rank }}</td>
+																		<td class="text-center">
+																			<app-team [team]="r.team" [showPlayerName]="true"></app-team>
+																		</td>
+																		<td class="text-center">{{ r.play }}</td>
+																		<td class="text-center">{{ r.win }}</td>
+																		<td class="text-center">{{ r.draw }}</td>
+																		<td class="text-center">{{ r.lose }}</td>
+																		<td class="text-center">{{ r.diff }}</td>
+																		<td class="text-center">{{ r.points }}</td>
+																	</tr>
+																</ng-container>
+															</tbody>
+														</table>
+													</div>
+													<div class="col order-last order-md-first">
+														<table class="table mb-0" [attr.aria-labelledby]="'titleGroup' + g.name">
+															<tbody>
+																<tr *ngFor="let m of sortMatchs(g); let i = index" class="align-middle">
+																	<th class="text-end">{{ i + 1 }}</th>
+																	<td class="px-2">
+																		<div class="row row-cols-3">
+																			<div class="col-3 text-center align-self-center">
+																				<app-team [team]="m.home" [showPlayerName]="true"></app-team>
+																			</div>
+																			<div class="col-6 text-center align-self-center">
+																				<ng-container *ngIf="!m.played">
+																					{{ "label.match.played.no" | translate }}
+																				</ng-container>
+																				<ng-container *ngIf="m.played">
+																					<div>{{ m.homeGoals }} - {{ m.awayGoals }}</div>
+																					<div *ngIf="m.penalty">
+																						<small>
+																							{{ "label.penalty.winner" | translate : getPenaltyWinner(m) }}
+																						</small>
+																					</div>
+																				</ng-container>
+																			</div>
+																			<div class="col-3 text-center align-self-center">
+																				<app-team [team]="m.away" [showPlayerName]="true"></app-team>
+																			</div>
+																		</div>
+																	</td>
+																	<td class="text-center">
+																		<button
+																			btnOutlineLightOrDark
+																			btn-small
+																			[attr.aria-label]="'button.edit.score' | translate"
+																			[ngbTooltip]="'button.edit.score' | translate"
+																			(click)="onClickEdit(m)"
+																			[disabled]="tournament.step?.nameEn !== 'Qualifying stage'"
+																			class="btn"
+																			data-bs-target="#editScore"
+																			data-bs-toggle="modal"
+																			type="button">
+																			<fa-icon [icon]="['fas', 'pencil']"></fa-icon>
+																		</button>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ng-template>
+				</li>
+				<li *ngIf="allowTab2" [ngbNavItem]="2" class="nav-item">
+					<a ngbNavLink>
+						{{ getFinalStage() }}
+					</a>
+					<ng-template ngbNavContent>
+						<div class="row">
+							<div class="col-12 mt-3">Prochainement</div>
+						</div>
+					</ng-template>
+				</li>
+			</ul>
+			<div [ngbNavOutlet]="nav"></div>
+		</div>
+	</div>
+</ng-container>
+<app-score [match]="currentMatch" (eventReload)="loadTournament()" (eventCancel)="clearCurrentMatch()"></app-score>

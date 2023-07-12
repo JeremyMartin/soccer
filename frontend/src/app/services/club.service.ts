@@ -10,7 +10,9 @@ import { Club } from "../models/club/club";
 export class ClubService {
 	constructor(private readonly http: HttpClient) {}
 
+	private pathClub: string = `${environment.apiUrl}/club`;
+
 	list(withNation: boolean = false): Observable<Array<Club>> {
-		return this.http.get<Array<Club>>(`${environment.apiUrl}/club/list?full=${withNation}`);
+		return this.http.get<Array<Club>>(`${this.pathClub}/list?full=${withNation}`);
 	}
 }

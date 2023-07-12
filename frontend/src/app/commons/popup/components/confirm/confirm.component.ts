@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 @Component({
 	selector: "app-confirm[id][titleKeyLabel][confirmKeyLabel][eventConfirm]",
 	templateUrl: "./confirm.component.html",
-	styleUrls: ["./confirm.component.scss"],
 })
 export class ConfirmComponent {
 	@Input()
@@ -12,14 +11,32 @@ export class ConfirmComponent {
 	titleKeyLabel!: string;
 	@Input()
 	confirmKeyLabel!: string;
+	@Input()
+	confirmClass?: string;
 	@Output()
 	eventConfirm: EventEmitter<any> = new EventEmitter<any>();
 
+	// private onHideModal = () => {
+	// 	setTimeout(() => {
+	// 		console.log("onHideModal");
+	// 	}, 200);
+	// };
+	//
+	// ngAfterViewInit(): void {
+	// 	const modal: HTMLElement | null = document.getElementById(`confirm${this.id}`) as HTMLElement;
+	// 	if (modal) {
+	// 		modal.addEventListener(HIDE_MODAL, this.onHideModal);
+	// 	}
+	// }
+	//
+	// ngOnDestroy(): void {
+	// 	const modal: HTMLElement | null = document.getElementById(`confirm${this.id}`) as HTMLElement;
+	// 	if (modal) {
+	// 		modal.removeEventListener(HIDE_MODAL, this.onHideModal);
+	// 	}
+	// }
+
 	onClickConfirm(): void {
-		const btnClose: HTMLElement | null = document.getElementById("btnConfirmClose" + this.id);
-		if (btnClose) {
-			this.eventConfirm.emit(true);
-			btnClose.click();
-		}
+		this.eventConfirm.emit(true);
 	}
 }

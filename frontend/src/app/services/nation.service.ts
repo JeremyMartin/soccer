@@ -10,7 +10,9 @@ import { environment } from "../../environments/environment";
 export class NationService {
 	constructor(private readonly http: HttpClient) {}
 
+	private pathNation: string = `${environment.apiUrl}/nation`;
+
 	list(withClubs: boolean = false): Observable<Array<Nation>> {
-		return this.http.get<Array<Nation>>(`${environment.apiUrl}/nation/list?full=${withClubs}`);
+		return this.http.get<Array<Nation>>(`${this.pathNation}/list?full=${withClubs}`);
 	}
 }

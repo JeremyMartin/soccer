@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { ALL_THEME, THEME_DARK, THEME_LIGHT, THEME_OS_DEFAULT } from "../../utilities/theme.utilities";
 import { Theme } from "../../model/theme";
 import { ThemeService } from "../../service/theme.service";
+import { ALL_THEME, THEME_DARK, THEME_LIGHT, THEME_OS_DEFAULT } from "../../utilities/theme.utilities";
 
 @Component({
 	selector: "app-theme",

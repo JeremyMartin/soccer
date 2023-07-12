@@ -22,7 +22,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder(toBuilder = true)
-@ToString
 @JsonInclude(value = Include.NON_NULL)
 @Entity(name = "nation")
 @Table(name = "nation")
@@ -30,4 +29,9 @@ public class NationEntity extends AbstractLongNamingTranslatableEntity {
 
 	@OneToMany(mappedBy = "nation")
 	List<ClubEntity> clubs;
+
+	@Override
+	public String toString() {
+		return "NationEntity: { " + super.toString() + ", clubs:" + this.clubs + " }";
+	}
 }

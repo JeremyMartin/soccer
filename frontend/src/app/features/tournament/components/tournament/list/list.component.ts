@@ -1,13 +1,19 @@
-import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
-import { Tournament } from "../../../../../models/tournament/tournament";
-import { generateTournaments } from "../../../utilities/tournament.utilities";
-import { BreadcrumbItem } from "../../../../../commons/breadcrumb/model/breadcrumb-item";
-import { SortColumn, SortDirection, SortEvent } from "../../../../../directives/table/sort/model/sort-event";
-import { SortableDirective } from "../../../../../directives/table/sort/directive/sortable.directive";
-import { compareFn } from "../../../../../commons/utils/fn-utilities";
-import { LocalizeDatePipe } from "../../../../../pipes/date/pipe/localize-date.pipe";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { take } from "rxjs";
+import { BreadcrumbItem } from "../../../../../commons/breadcrumb/model/breadcrumb-item";
+import { Language } from "../../../../../commons/language/model/language";
+import { LanguageService } from "../../../../../commons/language/service/language.service";
+import { LANGUAGE_FR } from "../../../../../commons/language/utilities/language.utilities";
 import { EventPaging } from "../../../../../commons/pagination/model/event-paging";
+import { ToastService } from "../../../../../commons/toast/service/toast.service";
+import { compareFn } from "../../../../../commons/utils/fn-utilities";
+import { SortableDirective } from "../../../../../directives/table/sort/directive/sortable.directive";
+import { SortColumn, SortDirection, SortEvent } from "../../../../../directives/table/sort/model/sort-event";
+import { Tournament } from "../../../../../models/tournament/tournament";
+import { LocalizeDatePipe } from "../../../../../pipes/date/pipe/localize-date.pipe";
+import { TournamentService } from "../../../../../services/tournament.service";
 
 @Component({
 	selector: "app-list",
@@ -15,31 +21,55 @@ import { EventPaging } from "../../../../../commons/pagination/model/event-pagin
 	styleUrls: ["./list.component.scss"],
 })
 export class ListComponent implements OnInit {
-	@ViewChildren(SortableDirective)
-	private headers!: QueryList<SortableDirective>;
-	private sortedColumn: SortColumn = "";
-	private sortedDirection: SortDirection = "";
-	breadcrumbItems: Array<BreadcrumbItem> = [
+	readonly title: string = "page.tournament.list.default";
+	readonly breadcrumbItems: Array<BreadcrumbItem> = [
 		{ name: "menu.home", action: { path: "/" } },
 		{ name: "menu.tournament", action: { path: "/tournament" } },
 		{ name: "label.breadcrumb.list" },
 	];
-
+	readonly LANGUAGE_FR = LANGUAGE_FR;
+	isLoading: boolean = false;
+	errors: Set<string> = new Set<string>();
 	tournaments: Array<Tournament> = [];
 	originalTournaments: Array<Tournament> = [];
 	pageSize: number = 20;
 	maxPages: number = 6;
 	currentPage: number = 1;
 	currentTournament!: Tournament | undefined;
-
+	currentLanguage!: Language;
 	private datePipe!: LocalizeDatePipe;
+	@ViewChildren(SortableDirective)
+	private headers!: QueryList<SortableDirective>;
+	private sortedColumn: SortColumn = "";
+	private sortedDirection: SortDirection = "";
 
-	constructor(private readonly translateService: TranslateService) {
+	constructor(
+		private readonly cdr: ChangeDetectorRef,
+		private readonly languageService: LanguageService,
+		private readonly toastService: ToastService,
+		private readonly tournamentService: TournamentService,
+		private readonly translateService: TranslateService
+	) {
 		this.datePipe = new LocalizeDatePipe(translateService);
+		languageService.currentLanguage.subscribe((language) => (this.currentLanguage = language));
 	}
 
 	ngOnInit(): void {
-		this.originalTournaments = generateTournaments();
+		this.isLoading = true;
+		this.tournamentService
+			.list()
+			.pipe(take(1))
+			.subscribe({
+				next: (data) => {
+					this.originalTournaments = data;
+				},
+				error: (err: HttpErrorResponse) => {
+					console.error(err);
+					this.errors.add(err.error.message);
+					this.errors.add(err.error.cause);
+				},
+				complete: () => (this.isLoading = false),
+			});
 	}
 
 	onClickDelete(tournament: Tournament): void {
@@ -47,10 +77,30 @@ export class ListComponent implements OnInit {
 	}
 
 	confirmDelete(): void {
-		if (this.currentTournament) {
-			this.originalTournaments = this.originalTournaments.filter((t) => t !== this.currentTournament);
+		if (this.currentTournament && this.currentTournament.id) {
+			const tournament: Tournament | undefined = this.originalTournaments.find((t) => t.id === this.currentTournament?.id);
+			if (tournament) {
+				tournament.deleting = true;
+			}
+			this.currentTournament.deleting = true;
+			this.tournamentService.deleteById(this.currentTournament.id).subscribe({
+				next: () => {
+					this.toastService.showSuccess("success.delete.tournament");
+					this.originalTournaments = this.originalTournaments.filter((t) => t !== this.currentTournament);
+				},
+				error: (err: HttpErrorResponse) => {
+					console.error(err);
+					this.toastService.showError(err.error.message);
+					if (tournament) {
+						tournament.deleting = false;
+					}
+				},
+				complete: () => {
+					this.currentTournament = undefined;
+					console.log(this.currentTournament);
+				},
+			});
 		}
-		this.currentTournament = undefined;
 	}
 
 	onClickSort({ column, direction }: SortEvent): void {

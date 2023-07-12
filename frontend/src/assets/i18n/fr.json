@@ -1,14 +1,18 @@
 {
 	"button": {
 		"add": {
-			"main": "Ajouter",
+			"default": "Ajouter",
 			"tournament": "Ajouter un tournoi"
 		},
 		"cancel": "Annuler",
 		"close": "Fermer",
 		"delete": {
-			"main": "Supprimer",
+			"default": "Supprimer",
 			"tournament": "Supprimer le tournois"
+		},
+		"edit": {
+			"default": "Modifier",
+			"score": "Modifier le score"
 		},
 		"generate": "Générer",
 		"next": "Suivant",
@@ -27,10 +31,31 @@
 		"submit": "Soumettre"
 	},
 	"error": {
+		"add": {
+			"tournament": "Une erreur s'est produite lors de la création du tournoi"
+		},
 		"default": "Une erreur s'est produite",
+		"delete": {
+			"tournament": "Une erreur s'est produite lors de la suppression du tournoi"
+		},
 		"load": {
+			"club": "Impossible de charger les clubs",
 			"nation": "Impossible de charger les nations",
-			"club": "Impossible de charger les clubs"
+			"step": "Impossible de charger les étapes"
+		},
+		"not": {
+			"found": {
+				"tournament": "Tournoi introuvable"
+			},
+			"supported": {
+				"method": "Méthode non prise en charge"
+			}
+		},
+		"type": {
+			"mismatch": "Type incompatible"
+		},
+		"update": {
+			"match": "Une erreur s'est produite lors de la mise à jour du match"
 		}
 	},
 	"menu": {
@@ -50,31 +75,19 @@
 		},
 		"breadcrumb": {
 			"add": "Ajouter",
-			"main": "Fil d'Ariane",
+			"default": "Fil d'Ariane",
 			"list": "Liste",
 			"view": "Consulter"
 		},
 		"choose": {
-			"main": "Choisir",
-			"nb": {
-				"group": "Nombre de groupe",
-				"player": "Nombre de joueur",
-				"team": "Nombre d'équipes"
-			},
+			"default": "Choisir",
+			"name": "Choisir un nom",
 			"preference": {
 				"team": "Choix des équipes préférentielles"
-			},
-			"type": {
-				"leg": {
-					"first": "Aller",
-					"two": "Aller-retour"
-				},
-				"main": "Type",
-				"match": "Type de match",
-				"team": "Type d'équipes"
 			}
 		},
 		"club": "Club",
+		"configuration": "Configuration",
 		"confirm": {
 			"delete": {
 				"title": "Confirmation de suppression",
@@ -83,48 +96,114 @@
 				}
 			}
 		},
-		"configuration": "Configuration",
-		"loading": "Chargement...",
+		"date": "Date",
+		"edit": {
+			"score": {
+				"title": "Modification du score"
+			}
+		},
+		"group": {
+			"default": "Groupe",
+			"named": "Groupe {{name}}"
+		},
+		"irreversible": "Cette action est irréversible",
+		"information": "Informations",
+		"loading": {
+			"default": "Chargement",
+			"referential": "Chargement des données du référentiel",
+			"tournament": {
+				"default": "Chargement des données du tournoi",
+				"list": "Chargement de la liste des tournois"
+			}
+		},
+		"match": {
+			"played": {
+				"no": "Match pas encore joué",
+				"yes": "Match joué"
+			}
+		},
 		"name": {
-			"main": "Nom",
-			"player": "Nom du joueur"
+			"default": "Nom",
+			"player": "Nom du joueur",
+			"tournament": "Nom du tournoi"
+		},
+		"nb": {
+			"card": {
+				"red": "Nombre de cartons rouges",
+				"yellow": "Nombre de cartons jaunes"
+			},
+			"group": "Nombre de groupe",
+			"player": "Nombre de joueur",
+			"team": "Nombre d'équipes"
 		},
 		"national": "Nationale",
 		"pagination": {
 			"choose": "Éléments par page"
 		},
+		"penalty": {
+			"default": "Aux tirs au but",
+			"winner": "{{winner}} gagne {{goalsWinner}} - {{goalsLoser}} aux tirs au but"
+		},
 		"placeholder": {
 			"enter": {
 				"name": {
-					"main":"Saisir le nom",
+					"default": "Saisir le nom",
 					"club": "Saisir le nom du club",
-					"nation": "Saisir le nom de l'équipe nationale"
+					"nation": "Saisir le nom de l'équipe nationale",
+					"tournament": "Saisir le nom du tournois"
+				},
+				"nb": {
+					"player": "Saisir un nombre de joueur"
 				}
 			}
 		},
 		"players": "Joueurs",
 		"random": "Aléatoire",
+		"ranking": {
+			"default": "Classement",
+			"play": "J",
+			"win": "G",
+			"draw": "N",
+			"lose": "P",
+			"difference": "Dif.",
+			"points": "Pts"
+		},
+		"result": {
+			"default": "Résultat",
+			"match": "Résultat du match",
+			"card": "Carton"
+		},
+		"stage": "Phase",
 		"teams": "Équipes",
 		"theme": {
-			"main": "Thème",
+			"default": "Thème",
 			"dark": "Sombre",
 			"light": "Clair",
 			"os-default": "Os par défaut"
+		},
+		"type": {
+			"default": "Type",
+			"match": {
+				"default": "Type de match",
+				"1": "Aller",
+				"2": "Aller-retour"
+			},
+			"team": "Type d'équipes"
 		}
 	},
 	"page": {
 		"error": {
 			"404": {
-				"main": "Page non trouvée"
+				"default": "Page non trouvée"
 			}
 		},
 		"home": {
-			"main": "Bienvenue sur la plateforme de gestion de tournois de football"
+			"default": "Bienvenue sur la plateforme de gestion de tournois de football"
 		},
 		"parameters": {
-			"main": "Paramètres",
+			"default": "Paramètres",
 			"preference": {
-				"main": "Préférences",
+				"default": "Préférences",
 				"toggle": "Ouvrir / fermer les préférence",
 				"language": "Langue",
 				"theme": "Thème"
@@ -132,14 +211,26 @@
 		},
 		"tournament": {
 			"list": {
-				"main": "Liste des tournois"
+				"default": "Liste des tournois",
+				"empty": "Pas de tournoi"
 			},
 			"add": {
-				"main": "Ajouter un tournoi"
+				"default": "Ajouter un tournoi"
 			},
 			"view": {
-				"main": "Consulter un tournoi"
+				"default": "Consulter un tournoi"
 			}
+		}
+	},
+	"success": {
+		"add": {
+			"tournament": "Tournois ajouté avec succès"
+		},
+		"delete": {
+			"tournament": "Tournois supprimé avec succès"
+		},
+		"update": {
+			"match": "Match mis à jour avec succès"
 		}
 	}
 }

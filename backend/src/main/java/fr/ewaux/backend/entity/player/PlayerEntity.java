@@ -17,10 +17,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder(toBuilder = true)
-@ToString
 @JsonInclude(value = Include.NON_NULL)
 @Entity(name = "player")
 @Table(name = "player")
 public class PlayerEntity extends AbstractLongNamingEntity {
 
+	@Override
+	public String toString() {
+		return "PlayerEntity: { " + super.toString() + " }";
+	}
 }

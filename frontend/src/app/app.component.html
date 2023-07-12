@@ -2,13 +2,16 @@
 	<div class="flex-shrink-1">
 		<app-menu></app-menu>
 	</div>
+	<div class="flex-shrink-0">
+		<app-toast></app-toast>
+	</div>
 	<div class="main d-flex flex-column flex-grow-1 overflow-auto">
 		<div id="main" class="container-fluid my-4 flex-grow-1">
 			<app-debug *ngIf="isDebugStyle"></app-debug>
-			<router-outlet> </router-outlet>
+			<router-outlet></router-outlet>
 		</div>
 		<app-footer></app-footer>
 	</div>
 </div>
-<app-spinner *ngIf="isLoading" [isFullPage]="true"></app-spinner>
+<app-spinner *ngIf="isLoading" [isFullPage]="true" [message]="'label.loading.referential'"></app-spinner>
 <app-error *ngIf="hasErrors" [errors]="errors" [isFullPage]="true"></app-error>

@@ -1,7 +1,7 @@
 package fr.ewaux.backend.service.club.impl;
 
 import fr.ewaux.backend.mapper.club.ClubMapper;
-import fr.ewaux.backend.model.soccer.club.Club;
+import fr.ewaux.backend.model.response.club.ClubResponse;
 import fr.ewaux.backend.repository.club.ClubRepository;
 import fr.ewaux.backend.service.club.ClubService;
 import java.util.Set;
@@ -20,7 +20,8 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	@Transactional
-	public Set<Club> list(final boolean withNation) {
-		return ClubMapper.mapEntitiesToSimpleSetModels(this.clubRepository.findAll(), withNation);
+	public Set<ClubResponse> list(final boolean withNation) {
+		return ClubMapper.mapEntitiesToModels(this.clubRepository.findAll(), withNation);
 	}
+
 }

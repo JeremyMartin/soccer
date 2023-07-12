@@ -1,6 +1,4 @@
-<div class="d-flex justify-content-center">
-	<h1>{{ "page.parameters.main" | translate }}</h1>
-</div>
+<app-title [title]="title"></app-title>
 <div class="d-flex">
 	<div class="col-12 col-lg-8 offset-lg-2">
 		<div class="card shadow">
@@ -15,8 +13,9 @@
 							aria-expanded="true"
 							aria-controls="preferences"
 							[attr.aria-label]="'page.parameters.preference.toggle' | translate">
-							<fa-icon [icon]="['fas', 'chevron-right']" aria-hidden="true"></fa-icon>
-							{{ "page.parameters.preference.main" | translate }}
+							<fa-icon [icon]="['fas', 'sliders']" aria-hidden="true"></fa-icon>
+							{{ "page.parameters.preference.default" | translate }}
+							<fa-icon [icon]="['fas', 'chevron-down']" aria-hidden="true"></fa-icon>
 						</button>
 					</h2>
 					<div id="preferences" class="collapse show">
